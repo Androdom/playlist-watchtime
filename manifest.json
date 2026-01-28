@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Playlist Watch Time Calculator",
+  "version": "1.1.2",
+  "description": "Calculate the total watch time of a YouTube playlist at different playback speeds.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "youtube-playlist-watchtime@androdom.com.tr",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "ek/icon-16.png",
+      "24": "ek/icon-24.png",
+      "32": "ek/icon-32.png",
+      "48": "ek/icon-48.png",
+      "64": "ek/icon-64.png",
+      "96": "ek/icon-96.png",
+      "128": "ek/icon-128.png"
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/playlist*",
+        "*://*.youtube.com/watch*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "ek/lang/**/*.json"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "ek/icon-16.png",
+    "24": "ek/icon-24.png",
+    "32": "ek/icon-32.png",
+    "48": "ek/icon-48.png",
+    "64": "ek/icon-64.png",
+    "96": "ek/icon-96.png",
+    "128": "ek/icon-128.png"
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "header": "播放列表时长计算器",
+    "selected": "已选择:",
+    "duration1x": "时长 (1x):",
+    "duration15x": "时长 (1.5x):",
+    "duration2x": "时长 (2x):",
+    "customSpeed": "自定义速度:",
+    "customDuration": "自定义时长:",
+    "rangeSelection": "范围选择:",
+    "start": "开始:",
+    "end": "结束:",
+    "video": "视频",
+    "videosCounted": "已统计视频:",
+    "videosNotCounted": "未统计:",
+    "loading": "加载中",
+    "h": "时",
+    "m": "分",
+    "s": "秒"
+}

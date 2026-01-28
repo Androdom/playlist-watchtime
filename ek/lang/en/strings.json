@@ -1,0 +1,19 @@
+{
+    "header": "YOUTUBE PLAYLIST CALCULATOR",
+    "selected": "Selected:",
+    "duration1x": "Duration (1x):",
+    "duration15x": "Duration (1.5x):",
+    "duration2x": "Duration (2x):",
+    "customSpeed": "Custom Speed:",
+    "customDuration": "Custom Duration:",
+    "rangeSelection": "Range Selection:",
+    "start": "Start:",
+    "end": "End:",
+    "video": "Video",
+    "videosCounted": "Videos counted:",
+    "videosNotCounted": "Not counted:",
+    "loading": "Loading",
+    "h": "h",
+    "m": "m",
+    "s": "s"
+}

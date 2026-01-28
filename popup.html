@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Watch Time Calculator</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="popup-container">
+        <header>
+            <div class="logo-text">
+                <span id="header-title">YouTube Playlist Watch Time Calculator</span>
+            </div>
+        </header>
+
+        <section class="settings-group">
+            <label class="section-label" id="label-appearance">APPEARANCE</label>
+            <div class="theme-grid">
+                <button class="theme-btn" data-theme="light" id="theme-light">
+                    <span class="icon">☀️</span>
+                    <span class="text" id="txt-light">Light</span>
+                </button>
+                <button class="theme-btn active" data-theme="dark" id="theme-dark">
+                    <span class="icon">🌙</span>
+                    <span class="text" id="txt-dark">Dark</span>
+                </button>
+                <button class="theme-btn" data-theme="oled" id="theme-oled">
+                    <span class="icon">🌑</span>
+                    <span class="text" id="txt-oled">OLED</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="settings-group">
+            <label class="section-label" id="label-language">LANGUAGE</label>
+            <div class="lang-selector">
+                <select id="lang-select">
+                    <option value="en">English (EN)</option>
+                    <option value="tr">Türkçe (TR)</option>
+                    <option value="es">Español (ES)</option>
+                    <option value="ar">العربية (AR)</option>
+                    <option value="ru">Русский (RU)</option>
+                    <option value="fr">Français (FR)</option>
+                    <option value="de">Deutsch (DE)</option>
+                    <option value="zh">简体中文 (ZH)</option>
+                    <option value="hi">हिन्दी (HI)</option>
+                </select>
+            </div>
+        </section>
+
+
+
+
+
+        <footer>
+            <div class="footer-minimal">
+                <div class="stars" id="star-rating">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <div class="footer-links">
+                    <button class="minimal-link" id="github-btn">GitHub 🛠️</button>
+                    <span class="divider">|</span>
+                    <div class="attribution">
+                        <span id="txt-made-by">Made by <span class="brand-color">Androdom</span></span>
+                    </div>
+                </div>
+                <p class="rating-note" id="rating-text">Hope you like it!</p>
+            </div>
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>

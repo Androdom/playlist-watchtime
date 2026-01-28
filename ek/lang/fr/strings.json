@@ -1,0 +1,19 @@
+{
+    "header": "Calculateur de durée de playlist",
+    "selected": "Sélectionné :",
+    "duration1x": "Durée (1x) :",
+    "duration15x": "Durée (1.5x) :",
+    "duration2x": "Durée (2x) :",
+    "customSpeed": "Vitesse personnalisée :",
+    "customDuration": "Durée personnalisée :",
+    "rangeSelection": "Sélection de plage :",
+    "start": "Début :",
+    "end": "Fin :",
+    "video": "vidéos",
+    "videosCounted": "Vidéos comptées :",
+    "videosNotCounted": "Non comptées :",
+    "loading": "Chargement",
+    "h": "h",
+    "m": "min",
+    "s": "s"
+}

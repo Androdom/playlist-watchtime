@@ -1,0 +1,19 @@
+{
+    "header": "YOUTUBE OYNATMA LİSTESİ HESAPLAYICI",
+    "selected": "Seçili:",
+    "duration1x": "Süre (1x):",
+    "duration15x": "Süre (1.5x):",
+    "duration2x": "Süre (2x):",
+    "customSpeed": "Özel Hız:",
+    "customDuration": "Özel Süre:",
+    "rangeSelection": "Aralık Seçimi:",
+    "start": "Baş:",
+    "end": "Bit:",
+    "video": "Video",
+    "videosCounted": "Sayılan videolar:",
+    "videosNotCounted": "Sayılamayan:",
+    "loading": "Yükleniyor",
+    "h": "sa",
+    "m": "dk",
+    "s": "sn"
+}
