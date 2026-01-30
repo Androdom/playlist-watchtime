@@ -490,8 +490,10 @@ const MainApp = {
 
         r1.oninput = () => syncAll('r1');
         r2.oninput = () => syncAll('r2');
-        i1.oninput = () => syncFromInput(i1, true);
-        i2.oninput = () => syncFromInput(i2, false);
+        i1.onblur = () => syncFromInput(i1, true);
+        i2.onblur = () => syncFromInput(i2, false);
+        i1.onkeypress = (e) => { if (e.key === 'Enter') syncFromInput(i1, true); };
+        i2.onkeypress = (e) => { if (e.key === 'Enter') syncFromInput(i2, false); };
         speedSlider.oninput = () => this.update();
     },
 
