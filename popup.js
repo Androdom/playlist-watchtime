@@ -71,7 +71,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             ratingText.textContent = msg;
             setTimeout(() => {
-                window.open('https://forms.gle/Xfn4FT3jYYEEmgNP7', '_blank');
+                // 1-2 stars: feedback form, 3-5 stars: Firefox Add-ons store
+                const url = val <= 2 ? 'https://forms.gle/Xfn4FT3jYYEEmgNP7' : 'https://addons.mozilla.org/en-US/firefox/addon/youtube-playlist-watch-time/';
+                window.open(url, '_blank');
                 updateLocaleContent(langSelect.value); // Reset localized text
             }, 1500);
         };
