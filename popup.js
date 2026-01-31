@@ -53,16 +53,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                 s.classList.toggle('active', i < val);
             });
 
-            const msg = langSelect.value === 'tr' ? "Geri bildirim formuna yönlendiriliyorsunuz..." :
-                langSelect.value === 'en' ? "Taking you to feedback form..." :
-                    langSelect.value === 'es' ? "Redirigiendo al formulario..." :
-                        langSelect.value === 'ar' ? "جاري توجيهك إلى نموذج الملاحظات..." :
-                            langSelect.value === 'ru' ? "Перенаправление на форму обратной связи..." :
-                                langSelect.value === 'fr' ? "Redirection vers le formulaire de commentaires..." :
-                                    langSelect.value === 'de' ? "Weiterleitung zum Feedback-Formular..." :
-                                        langSelect.value === 'zh' ? "正在转向反馈表单..." :
-                                            langSelect.value === 'hi' ? "आपको फीडबैक फॉर्म पर ले जाया जा रहा है..." :
-                                                "Taking you to feedback form...";
+            const msg = langSelect.value === 'az' ? "Rəy formasına yönləndirilirsiniz..." :
+                langSelect.value === 'de' ? "Weiterleitung zum Feedback-Formular..." :
+                    langSelect.value === 'ar' ? "جاري توجيهك إلى نموذج الملاحظات..." :
+                        langSelect.value === 'zh' ? "正在转向反馈表单..." :
+                            langSelect.value === 'en' ? "Taking you to feedback form..." :
+                                langSelect.value === 'id' ? "Membawa Anda ke formulir umpan balik..." :
+                                    langSelect.value === 'fr' ? "Redirection vers le formulaire de commentaires..." :
+                                        langSelect.value === 'hi' ? "आपको फीडबैक फॉर्म पर ले जाया जा रहा है..." :
+                                            langSelect.value === 'ja' ? "フィードバックフォームに転送しています..." :
+                                                langSelect.value === 'kk' ? "Пікірлер түрін ашуға бағыттап тұрмыз..." :
+                                                    langSelect.value === 'ko' ? "피드백 양식으로 이동 중입니다..." :
+                                                        langSelect.value === 'ru' ? "Перенаправление на форму обратной связи..." :
+                                                            langSelect.value === 'tr' ? "Geri bildirim formuna yönlendiriliyorsunuz..." :
+                                                                langSelect.value === 'es' ? "Redirigiendo al formulario..." :
+                                                                    "Taking you to feedback form...";
 
             ratingText.textContent = msg;
             setTimeout(() => {
@@ -87,77 +92,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             const strings = await response.json();
 
             const translations = {
-                tr: {
-                    title: "YouTube Oynatma Listesi Hesaplayıcı",
-                    appearance: "GÖRÜNÜM",
-                    light: "Aydınlık",
-                    dark: "Karanlık",
+                az: {
+                    title: "YouTube Pleylisti Saatı Kalkulyatoru",
+                    appearance: "GÖRÜNÜŞ",
+                    light: "Açıq",
+                    dark: "Tünd",
                     oled: "OLED",
                     language: "DİL",
-                    rate: "UYGULAMAYI OYLAYIN",
-                    hope: "Umarız beğenirsiniz!",
-                    github: "GitHub 🛠️",
-                    madeBy: "Androdom tarafından yapıldı"
-                },
-                en: {
-                    title: "YouTube Playlist Watch Time Calculator",
-                    appearance: "APPEARANCE",
-                    light: "Light",
-                    dark: "Dark",
-                    oled: "OLED",
-                    language: "LANGUAGE",
-                    rate: "RATE THE APP",
-                    hope: "Hope you like it!",
+                    rate: "UYGULAMANI QİYMƏTLƏNDİR",
+                    hope: "Ümid edirik ki, sənə bəyənəcəksən!",
                     github: "🛠️ GitHub",
-                    madeBy: "Made by Androdom"
-                },
-                es: {
-                    title: "YouTube Calculadora de Tiempo",
-                    appearance: "APARIENCIA",
-                    light: "Claro",
-                    dark: "Oscuro",
-                    oled: "OLED",
-                    language: "IDIOMA",
-                    rate: "CALIFICA LA APP",
-                    hope: "¡Esperamos que te guste!",
-                    github: "🛠️ GitHub",
-                    madeBy: "Hecho por Androdom"
-                },
-                ar: {
-                    title: "YouTube حاسبة وقت التشغيل",
-                    appearance: "المظهر",
-                    light: "فاتح",
-                    dark: "داكن",
-                    oled: "OLED",
-                    language: "اللغة",
-                    rate: "قيم التطبيق",
-                    hope: "نأمل أن ينال إعجابكم!",
-                    github: "GitHub 🛠️",
-                    madeBy: "تم التطوير بواسطة Androdom"
-                },
-                ru: {
-                    title: "YouTube Калькулятор времени",
-                    appearance: "ВНЕШНИЙ ВИД",
-                    light: "Светлая",
-                    dark: "Темная",
-                    oled: "OLED",
-                    language: "ЯЗЫК",
-                    rate: "ОЦЕНИТЕ ПРИЛОЖЕНИЕ",
-                    hope: "Надеемся, вам понравится!",
-                    github: "🛠️ GitHub",
-                    madeBy: "Создано Androdom"
-                },
-                fr: {
-                    title: "YouTube Calculateur de visionnage",
-                    appearance: "APPARENCE",
-                    light: "Clair",
-                    dark: "Sombre",
-                    oled: "OLED",
-                    language: "LANGUE",
-                    rate: "ÉVALUER L'APP",
-                    hope: "On espère que ça vous plaira !",
-                    github: "🛠️ GitHub",
-                    madeBy: "Fait par Androdom"
+                    madeBy: "Androdom tərəfindən hazırlanmışdır"
                 },
                 de: {
                     title: "YouTube Wiedergabezeit-Rechner",
@@ -171,6 +116,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                     github: "🛠️ GitHub",
                     madeBy: "Von Androdom erstellt"
                 },
+                ar: {
+                    title: "YouTube حاسبة وقت التشغيل",
+                    appearance: "المظهر",
+                    light: "فاتح",
+                    dark: "داكن",
+                    oled: "OLED",
+                    language: "اللغة",
+                    rate: "قيم التطبيق",
+                    hope: "نأمل أن ينال إعجابكم!",
+                    github: "GitHub 🛠️",
+                    madeBy: "تم التطوير بواسطة Androdom"
+                },
                 zh: {
                     title: "YouTube 播放列表时长计算器",
                     appearance: "外观",
@@ -183,6 +140,42 @@ document.addEventListener('DOMContentLoaded', async () => {
                     github: "🛠️ GitHub",
                     madeBy: "由 Androdom 开发"
                 },
+                en: {
+                    title: "YouTube Playlist Watch Time Calculator",
+                    appearance: "APPEARANCE",
+                    light: "Light",
+                    dark: "Dark",
+                    oled: "OLED",
+                    language: "LANGUAGE",
+                    rate: "RATE THE APP",
+                    hope: "Hope you like it!",
+                    github: "🛠️ GitHub",
+                    madeBy: "Made by Androdom"
+                },
+                id: {
+                    title: "Kalkulator Waktu Putar Playlist YouTube",
+                    appearance: "PENAMPILAN",
+                    light: "Terang",
+                    dark: "Gelap",
+                    oled: "OLED",
+                    language: "BAHASA",
+                    rate: "BERI RATING APLIKASI",
+                    hope: "Semoga Anda menyukainya!",
+                    github: "🛠️ GitHub",
+                    madeBy: "Dibuat oleh Androdom"
+                },
+                fr: {
+                    title: "YouTube Calculateur de visionnage",
+                    appearance: "APPARENCE",
+                    light: "Clair",
+                    dark: "Sombre",
+                    oled: "OLED",
+                    language: "LANGUE",
+                    rate: "ÉVALUER L'APP",
+                    hope: "On espère que ça vous plaira !",
+                    github: "🛠️ GitHub",
+                    madeBy: "Fait par Androdom"
+                },
                 hi: {
                     title: "YouTube प्लेलिस्ट वॉच टाइम कैलकुलेटर",
                     appearance: "रंग-रूप",
@@ -194,6 +187,78 @@ document.addEventListener('DOMContentLoaded', async () => {
                     hope: "आशा है कि आपको यह पसंद आएगा!",
                     github: "🛠️ GitHub",
                     madeBy: "Androdom द्वारा निर्मित"
+                },
+                ja: {
+                    title: "YouTubeプレイリスト再生時間計算機",
+                    appearance: "外観",
+                    light: "ライト",
+                    dark: "ダーク",
+                    oled: "OLED",
+                    language: "言語",
+                    rate: "アプリを評価",
+                    hope: "楽しんでいただけたら幸いです！",
+                    github: "🛠️ GitHub",
+                    madeBy: "Androdomが作成"
+                },
+                kk: {
+                    title: "YouTube Oynatw Tiziminiñ Uzaqtığın Eseptew",
+                    appearance: "KÖRÏNISÏ",
+                    light: "Jarıq",
+                    dark: "Qaraññğy",
+                    oled: "OLED",
+                    language: "TÏL",
+                    rate: "QOSYMSHANY BAĞALAÑYZ",
+                    hope: "Unağany dep oylaymyz!",
+                    github: "🛠️ GitHub",
+                    madeBy: "Androdom ishinde jasalgan"
+                },
+                ko: {
+                    title: "YouTube 재생목록 시청 시간 계산기",
+                    appearance: "모양",
+                    light: "밝음",
+                    dark: "어두움",
+                    oled: "OLED",
+                    language: "언어",
+                    rate: "앱 평가",
+                    hope: "마음에 드셨기를 바랍니다!",
+                    github: "🛠️ GitHub",
+                    madeBy: "Androdom이 작성함"
+                },
+                ru: {
+                    title: "YouTube Калькулятор времени",
+                    appearance: "ВНЕШНИЙ ВИД",
+                    light: "Светлая",
+                    dark: "Темная",
+                    oled: "OLED",
+                    language: "ЯЗЫК",
+                    rate: "ОЦЕНИТЕ ПРИЛОЖЕНИЕ",
+                    hope: "Надеемся, вам понравится!",
+                    github: "🛠️ GitHub",
+                    madeBy: "Создано Androdom"
+                },
+                tr: {
+                    title: "YouTube Oynatma Listesi Hesaplayıcı",
+                    appearance: "GÖRÜNÜM",
+                    light: "Aydınlık",
+                    dark: "Karanlık",
+                    oled: "OLED",
+                    language: "DİL",
+                    rate: "UYGULAMAYI OYLAYIN",
+                    hope: "Umarız beğenirsiniz!",
+                    github: "GitHub 🛠️",
+                    madeBy: "Androdom tarafından yapıldı"
+                },
+                es: {
+                    title: "YouTube Calculadora de Tiempo",
+                    appearance: "APARIENCIA",
+                    light: "Claro",
+                    dark: "Oscuro",
+                    oled: "OLED",
+                    language: "IDIOMA",
+                    rate: "CALIFICA LA APP",
+                    hope: "¡Esperamos que te guste!",
+                    github: "🛠️ GitHub",
+                    madeBy: "Hecho por Androdom"
                 }
             };
 

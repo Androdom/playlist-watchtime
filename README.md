@@ -10,7 +10,7 @@ A powerful and elegant browser extension to calculate the total duration of YouT
 - **Visual Progress:** See exactly how many videos are counted and loaded in real-time.
 - **Premium UI:** Beautifully crafted settings popup with:
   - **Themes:** Light, Dark, and OLED (Pure Black) modes.
-  - **Localization:** Full support for 9 languages including English, Turkish, Spanish, Arabic, Russian, French, German, Chinese, and Hindi.
+  - **Localization:** Full support for 14 languages including English, Turkish, Spanish, Arabic, Russian, French, German, Chinese, Hindi, Japanese, Korean, Kazakh, Azerbaijani, and Indonesian.
   - **Dynamic Updates:** Language and theme changes apply instantly without page refreshes.
 - **Universal Support:** Works seamlessly on both playlist pages and watch pages with sidebars.
 
@@ -25,7 +25,7 @@ A powerful and elegant browser extension to calculate the total duration of YouT
  ├─ popup.js          # Settings logic & theme management
  ├─ popup.css         # Premium design system
  └─ ek/               # Assets & Localization
-     ├─ lang/         # JSON translation files (9 languages)
+     ├─ lang/         # JSON translation files (14 languages)
      └─ *.png         # Extension icons
 ```
 
@@ -38,7 +38,7 @@ A powerful and elegant browser extension to calculate the total duration of YouT
 
 ## 🌍 Localization
 
-The extension is designed to be easily translatable. The current version supports English, Turkish, Spanish, Arabic, Russian, French, German, Chinese, and Hindi.
+The extension is designed to be easily translatable. The current version supports 14 languages: Azerbaijani, English, French, German, Hindi, Indonesian, Japanese, Kazakh, Korean, Russian, Spanish, Turkish, Arabic, and Chinese.
 
 ## ⚖️ License
 

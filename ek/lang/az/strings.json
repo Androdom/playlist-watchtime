@@ -1,0 +1,19 @@
+{
+    "header": "YouTube Pleylisti Kalkulyator",
+    "selected": "Seçilən:",
+    "duration1x": "Müddət (1x):",
+    "duration15x": "Müddət (1.5x):",
+    "duration2x": "Müddət (2x):",
+    "customSpeed": "Xüsusi Sürət:",
+    "customDuration": "Xüsusi Müddət:",
+    "rangeSelection": "Diapazon Seçimi:",
+    "start": "Başlama:",
+    "end": "Bitirmə:",
+    "video": "Video",
+    "videosCounted": "Hesablanan videolar:",
+    "videosNotCounted": "Hesaplanmayan:",
+    "loading": "Yüklənir",
+    "h": "s",
+    "m": "d",
+    "s": "sn"
+}

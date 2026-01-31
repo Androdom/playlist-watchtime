@@ -1,0 +1,19 @@
+{
+    "header": "YouTube 재생목록 계산기",
+    "selected": "선택됨:",
+    "duration1x": "시간 (1x):",
+    "duration15x": "시간 (1.5x):",
+    "duration2x": "시간 (2x):",
+    "customSpeed": "사용자 정의 속도:",
+    "customDuration": "사용자 정의 시간:",
+    "rangeSelection": "범위 선택:",
+    "start": "시작:",
+    "end": "종료:",
+    "video": "동영상",
+    "videosCounted": "계산된 동영상:",
+    "videosNotCounted": "계산되지 않음:",
+    "loading": "로드 중",
+    "h": "시간",
+    "m": "분",
+    "s": "초"
+}
