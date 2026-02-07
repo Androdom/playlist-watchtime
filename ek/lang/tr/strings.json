@@ -15,5 +15,7 @@
     "loading": "Yükleniyor",
     "h": "sa",
     "m": "dk",
-    "s": "sn"
+    "s": "sn",
+    "features": "ÖZELLİKLER",
+    "playlistSpeedInfo": "Oynatma listesi hız özetleri (videonun yanında gösterilir)"
 }

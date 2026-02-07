@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const themeBtns = document.querySelectorAll('.theme-btn');
     const langSelect = document.getElementById('lang-select');
+    const playlistSpeedInfoToggle = document.getElementById('playlist-speed-info-toggle');
     const stars = document.querySelectorAll('.star');
     const ratingText = document.getElementById('rating-text');
     const githubBtn = document.getElementById('github-btn');
 
     // Load settings
-    const settings = await chrome.storage.local.get(['theme', 'lang', 'autoscroll']);
+    const settings = await chrome.storage.local.get(['theme', 'lang', 'autoscroll', 'playlistSpeedInfo']);
 
     // Set initial UI
     if (settings.theme) {
@@ -15,6 +16,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (settings.lang) {
         langSelect.value = settings.lang;
         updateLocaleContent(settings.lang);
+    }
+    if (playlistSpeedInfoToggle) {
+        playlistSpeedInfoToggle.checked = settings.playlistSpeedInfo !== false;
+        playlistSpeedInfoToggle.onchange = () => {
+            chrome.storage.local.set({ playlistSpeedInfo: playlistSpeedInfoToggle.checked });
+        };
     }
 
     // Theme changes
@@ -104,7 +111,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "UYGULAMANI QİYMƏTLƏNDİR",
                     hope: "Ümid edirik ki, sənə bəyənəcəksən!",
                     github: "🛠️ GitHub",
-                    madeBy: "Androdom tərəfindən hazırlanmışdır"
+                    madeBy: "Androdom tərəfindən hazırlanmışdır",
+                    features: "XÜSUSIYYƏTLƏR",
+                    playlistSpeedInfo: "Pleylist panelində sürət məlumatını göstər"
                 },
                 de: {
                     title: "YouTube Wiedergabezeit-Rechner",
@@ -116,7 +125,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "APP BEWERTEN",
                     hope: "Hoffentlich gefällt es dir!",
                     github: "🛠️ GitHub",
-                    madeBy: "Von Androdom erstellt"
+                    madeBy: "Von Androdom erstellt",
+                    features: "FUNKTIONEN",
+                    playlistSpeedInfo: "Geschwindigkeitsinformationen im Playlist-Feld anzeigen"
                 },
                 ar: {
                     title: "YouTube حاسبة وقت التشغيل",
@@ -128,7 +139,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "قيم التطبيق",
                     hope: "نأمل أن ينال إعجابكم!",
                     github: "GitHub 🛠️",
-                    madeBy: "تم التطوير بواسطة Androdom"
+                    madeBy: "تم التطوير بواسطة Androdom",
+                    features: "الميزات",
+                    playlistSpeedInfo: "إظهار معلومات السرعة في لوحة التشغيل"
                 },
                 zh: {
                     title: "YouTube 播放列表时长计算器",
@@ -140,7 +153,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "评价应用",
                     hope: "希望您能喜欢！",
                     github: "🛠️ GitHub",
-                    madeBy: "由 Androdom 开发"
+                    madeBy: "由 Androdom 开发",
+                    features: "功能",
+                    playlistSpeedInfo: "在播放列表面板中显示速度信息"
                 },
                 en: {
                     title: "YouTube Playlist Watch Time Calculator",
@@ -152,7 +167,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "RATE THE APP",
                     hope: "Hope you like it!",
                     github: "🛠️ GitHub",
-                    madeBy: "Made by Androdom"
+                    madeBy: "Made by Androdom",
+                    features: "FEATURES",
+                    playlistSpeedInfo: "Show speed info in playlist panel"
                 },
                 id: {
                     title: "Kalkulator Waktu Putar Playlist YouTube",
@@ -164,7 +181,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "BERI RATING APLIKASI",
                     hope: "Semoga Anda menyukainya!",
                     github: "🛠️ GitHub",
-                    madeBy: "Dibuat oleh Androdom"
+                    madeBy: "Dibuat oleh Androdom",
+                    features: "FITUR",
+                    playlistSpeedInfo: "Tampilkan informasi kecepatan di panel playlist"
                 },
                 fr: {
                     title: "YouTube Calculateur de visionnage",
@@ -176,7 +195,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "ÉVALUER L'APP",
                     hope: "On espère que ça vous plaira !",
                     github: "🛠️ GitHub",
-                    madeBy: "Fait par Androdom"
+                    madeBy: "Fait par Androdom",
+                    features: "FONCTIONNALITÉS",
+                    playlistSpeedInfo: "Afficher les informations de vitesse dans le panneau de la playlist"
                 },
                 hi: {
                     title: "YouTube प्लेलिस्ट वॉच टाइम कैलकुलेटर",
@@ -188,7 +209,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "ऐप को रेट करें",
                     hope: "आशा है कि आपको यह पसंद आएगा!",
                     github: "🛠️ GitHub",
-                    madeBy: "Androdom द्वारा निर्मित"
+                    madeBy: "Androdom द्वारा निर्मित",
+                    features: "सुविधाएँ",
+                    playlistSpeedInfo: "प्लेलिस्ट पैनल में स्पीड जानकारी दिखाएं"
                 },
                 ja: {
                     title: "YouTubeプレイリスト再生時間計算機",
@@ -200,7 +223,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "アプリを評価",
                     hope: "楽しんでいただけたら幸いです！",
                     github: "🛠️ GitHub",
-                    madeBy: "Androdomが作成"
+                    madeBy: "Androdomが作成",
+                    features: "機能",
+                    playlistSpeedInfo: "プレイリストパネルに速度情報を表示"
                 },
                 kk: {
                     title: "YouTube Oynatw Tiziminiñ Uzaqtığın Eseptew",
@@ -212,7 +237,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "QOSYMSHANY BAĞALAÑYZ",
                     hope: "Unağany dep oylaymyz!",
                     github: "🛠️ GitHub",
-                    madeBy: "Androdom ishinde jasalgan"
+                    madeBy: "Androdom ishinde jasalgan",
+                    features: "ЕРЕКШЕЛІКТЕР",
+                    playlistSpeedInfo: "Ойнау тізімі панелінде жылдамдық мәліметін көрсет"
                 },
                 ko: {
                     title: "YouTube 재생목록 시청 시간 계산기",
@@ -224,7 +251,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "앱 평가",
                     hope: "마음에 드셨기를 바랍니다!",
                     github: "🛠️ GitHub",
-                    madeBy: "Androdom이 작성함"
+                    madeBy: "Androdom이 작성함",
+                    features: "기능",
+                    playlistSpeedInfo: "재생목록 패널에서 속도 정보 표시"
                 },
                 ru: {
                     title: "YouTube Калькулятор времени",
@@ -236,7 +265,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "ОЦЕНИТЕ ПРИЛОЖЕНИЕ",
                     hope: "Надеемся, вам понравится!",
                     github: "🛠️ GitHub",
-                    madeBy: "Создано Androdom"
+                    madeBy: "Создано Androdom",
+                    features: "ФУНКЦИИ",
+                    playlistSpeedInfo: "Показать информацию о скорости на панели плейлиста"
                 },
                 tr: {
                     title: "YouTube Oynatma Listesi Hesaplayıcı",
@@ -248,7 +279,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "UYGULAMAYI OYLAYIN",
                     hope: "Umarız beğenirsiniz!",
                     github: "GitHub 🛠️",
-                    madeBy: "Androdom tarafından yapıldı"
+                    madeBy: "Androdom tarafından yapıldı",
+                    features: "ÖZELLİKLER",
+                    playlistSpeedInfo: "Oynatma listesinde hız bilgisini göster"
                 },
                 es: {
                     title: "YouTube Calculadora de Tiempo",
@@ -260,7 +293,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rate: "CALIFICA LA APP",
                     hope: "¡Esperamos que te guste!",
                     github: "🛠️ GitHub",
-                    madeBy: "Hecho por Androdom"
+                    madeBy: "Hecho por Androdom",
+                    features: "CARACTERÍSTICAS",
+                    playlistSpeedInfo: "Mostrar información de velocidad en el panel de lista de reproducción"
                 }
             };
 
@@ -272,6 +307,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('txt-dark').textContent = t.dark;
             document.getElementById('txt-oled').textContent = t.oled;
             document.getElementById('label-language').textContent = t.language;
+            document.getElementById('label-features').textContent = t.features;
+            document.getElementById('txt-playlist-speed-info').textContent = t.playlistSpeedInfo;
             document.getElementById('label-rate').textContent = t.rate;
             document.getElementById('rating-text').textContent = t.hope;
             document.getElementById('txt-github').textContent = t.github;

@@ -15,5 +15,7 @@
     "loading": "Loading",
     "h": "h",
     "m": "m",
-    "s": "s"
+    "s": "s",
+    "features": "FEATURES",
+    "playlistSpeedInfo": "Playlist speed summaries (shown beside the video)"
 }

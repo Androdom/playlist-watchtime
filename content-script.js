@@ -148,6 +148,27 @@ const YTTheme = {
         } else {
             panel.classList.remove('light-theme', 'oled-theme');
         }
+    },
+
+    async updatePlaylistPanelTheme(panel) {
+        if (!panel) return;
+
+        const settings = await chrome.storage.local.get('theme');
+        if (settings.theme && settings.theme !== 'auto') {
+            panel.classList.remove('light-theme', 'oled-theme');
+            if (settings.theme === 'light') panel.classList.add('light-theme');
+            if (settings.theme === 'oled') panel.classList.add('oled-theme');
+            return;
+        }
+
+        const bgColor = this.getEffectiveBgColor(panel.parentElement);
+        const brightness = this.getBrightness(bgColor);
+
+        if (brightness > 170) {
+            panel.classList.add('light-theme');
+        } else {
+            panel.classList.remove('light-theme', 'oled-theme');
+        }
     }
 };
 
@@ -185,6 +206,26 @@ const YTCalculator = {
         if (m > 0 || h > 0) res.push(`${m}${YTi18n.t('m')}`);
         res.push(`${sec}${YTi18n.t('s')}`);
         return res.join(' ');
+    },
+    calculatePlaylistDuration() {
+        let totalSeconds = 0;
+        const rows = YTParser.getPlaylistRows();
+        rows.forEach(row => {
+            const timeEl = row.querySelector('span#text.ytd-thumbnail-overlay-time-status-renderer') ||
+                row.querySelector('.ytd-thumbnail-overlay-time-status-renderer #text');
+            const duration = YTParser.parseTime(timeEl?.textContent || '0:00');
+            totalSeconds += duration;
+        });
+        return totalSeconds;
+    },
+    formatDurationShort(s) {
+        if (!s || s <= 0) return '0s';
+        const h = Math.floor(s / 3600);
+        const m = Math.floor((s % 3600) / 60);
+        const sec = Math.floor(s % 60);
+        if (h > 0) return `${h}h ${m}m`;
+        if (m > 0) return `${m}m ${sec}s`;
+        return `${sec}s`;
     }
 };
 
@@ -217,6 +258,135 @@ const YTUI = {
     }
 };
 
+const PlaylistPanelInfo = {
+    infoId: 'yt-playlist-speed-info',
+
+    async init() {
+        const settings = await chrome.storage.local.get('playlistSpeedInfo');
+        if (settings.playlistSpeedInfo === false) return;
+
+        const isWatchPage = location.href.includes('watch?v=') && location.href.includes('list=');
+        if (!isWatchPage) return;
+
+        // Wait a bit for the playlist panel to load
+        setTimeout(() => this.render(), 500);
+        this.setupObserver();
+    },
+
+    findPlaylistHeaderContainer() {
+        // Return the playlist panel renderer if present
+        const playlistPanel = document.querySelector('ytd-playlist-panel-renderer');
+        if (playlistPanel) return playlistPanel;
+
+        // Fallback: look for any playlist panel-like container
+        const alt = document.querySelector('ytd-playlist-sidebar-renderer, #playlist-items, #items');
+        if (alt) return alt;
+
+        // Debug logs to help diagnose
+        console.log('PlaylistPanelInfo.findPlaylistHeaderContainer: no panel found. Counts:', {
+            panels: document.querySelectorAll('ytd-playlist-panel-renderer').length,
+            panelHeaders: document.querySelectorAll('ytd-playlist-panel-header-renderer').length,
+            sidebarHeaders: document.querySelectorAll('ytd-playlist-sidebar-primary-info-renderer').length,
+            playlistItems: document.querySelectorAll('ytd-playlist-panel-video-renderer, ytd-playlist-video-renderer').length
+        });
+
+        return null;
+    },
+
+    render() {
+        const headerContainer = this.findPlaylistHeaderContainer();
+        if (!headerContainer) {
+            console.log('Playlist panel header not found');
+            return;
+        }
+
+        console.log('PlaylistPanelInfo.render: headerContainer found', headerContainer);
+
+        // Remove existing to avoid duplicates
+        let infoContainer = document.getElementById(this.infoId);
+        if (infoContainer && infoContainer.parentElement) {
+            infoContainer.parentElement.removeChild(infoContainer);
+            infoContainer = null;
+        }
+
+        infoContainer = document.createElement('div');
+        infoContainer.id = this.infoId;
+        infoContainer.className = 'yt-playlist-speed-info';
+
+        const totalSeconds = YTCalculator.calculatePlaylistDuration();
+        const speeds = [1, 1.5, 1.75, 2];
+
+        infoContainer.innerHTML = speeds.map(speed => {
+            const duration = YTCalculator.formatDurationShort(totalSeconds / speed);
+            const label = speed === 1 ? '1x' : speed.toFixed(2) + 'x';
+            return `<div class="speed-info-box">
+                        <span class="speed-label">${label}</span>
+                        <span class="speed-duration">${duration}</span>
+                    </div>`;
+        }).join('');
+
+        // Force visible styling in case YouTube CSS hides it
+        try {
+            infoContainer.style.setProperty('display', 'flex', 'important');
+            infoContainer.style.setProperty('flex-wrap', 'wrap', 'important');
+            infoContainer.style.setProperty('gap', '6px', 'important');
+            infoContainer.style.setProperty('width', '100%', 'important');
+            infoContainer.style.setProperty('box-sizing', 'border-box', 'important');
+            infoContainer.style.setProperty('z-index', '9999', 'important');
+            infoContainer.style.setProperty('position', 'relative', 'important');
+            infoContainer.style.setProperty('background', 'transparent', 'important');
+            infoContainer.style.setProperty('color', 'var(--yt-spec-text-primary, #fff)', 'important');
+        } catch (e) {
+            // ignore if setProperty not allowed
+        }
+
+        // Prefer inserting before the items list if available, otherwise append to the panel
+        const itemsEl = headerContainer.querySelector('#items, #contents, ytd-playlist-video-list-renderer, ytd-section-list-renderer')
+            || headerContainer.parentElement && headerContainer.parentElement.querySelector('#items, #contents');
+
+        if (itemsEl && itemsEl.parentElement) {
+            itemsEl.parentElement.insertBefore(infoContainer, itemsEl);
+            console.log('PlaylistPanelInfo: inserted before itemsEl');
+        } else if (headerContainer.appendChild) {
+            headerContainer.appendChild(infoContainer);
+            console.log('PlaylistPanelInfo: appended to headerContainer');
+        } else if (headerContainer.parentElement) {
+            headerContainer.parentElement.appendChild(infoContainer);
+            console.log('PlaylistPanelInfo: appended to parent');
+        } else {
+            document.body.appendChild(infoContainer);
+            console.log('PlaylistPanelInfo: appended to body as last resort');
+        }
+
+        // Debug
+        console.log('PlaylistPanelInfo: inserted infoContainer, totalSeconds=', totalSeconds);
+
+        // Update theme
+        YTTheme.updatePlaylistPanelTheme(infoContainer);
+    },
+
+    setupObserver() {
+        const observer = new MutationObserver((mutations) => {
+            const hasVideoChanges = mutations.some(m =>
+                Array.from(m.addedNodes).some(node =>
+                    node.nodeType === 1 && node.querySelector && (
+                        node.matches('ytd-playlist-panel-video-renderer') || 
+                        node.querySelector('ytd-playlist-panel-video-renderer')
+                    )
+                )
+            );
+            if (hasVideoChanges) {
+                setTimeout(() => this.render(), 300);
+            }
+        });
+
+        const playlistPanel = document.querySelector('ytd-playlist-panel-renderer');
+        if (playlistPanel) {
+            observer.observe(playlistPanel, { childList: true, subtree: true });
+        }
+    }
+};
+
 const MainApp = {
     isFirstScan: true,
 
@@ -232,6 +402,11 @@ const MainApp = {
         }
 
         if (!YTi18n.strings.header) await YTi18n.init();
+
+        // Initialize playlist panel info for watch page with playlist
+        if (isWatchPage && isPlaylist) {
+            PlaylistPanelInfo.init();
+        }
 
         const target = this.findTarget();
 
@@ -315,6 +490,16 @@ const MainApp = {
                 if (changes.theme) {
                     const panel = document.getElementById(panelId);
                     YTTheme.updatePanelTheme(panel);
+                    const playlistInfo = document.getElementById(PlaylistPanelInfo.infoId);
+                    if (playlistInfo) YTTheme.updatePlaylistPanelTheme(playlistInfo);
+                }
+                if (changes.playlistSpeedInfo !== undefined) {
+                    if (changes.playlistSpeedInfo.newValue === false) {
+                        const playlistInfo = document.getElementById(PlaylistPanelInfo.infoId);
+                        if (playlistInfo) playlistInfo.remove();
+                    } else {
+                        PlaylistPanelInfo.render();
+                    }
                 }
             });
             this.hasStorageListener = true;
@@ -587,5 +772,15 @@ const MainApp = {
     }
 };
 
-document.addEventListener('yt-navigate-finish', () => MainApp.init());
-if (location.href.includes('list=')) MainApp.init();
+document.addEventListener('yt-navigate-finish', () => {
+    MainApp.init();
+    if (location.href.includes('watch?v=') && location.href.includes('list=')) {
+        PlaylistPanelInfo.init();
+    }
+});
+if (location.href.includes('list=')) {
+    MainApp.init();
+}
+if (location.href.includes('watch?v=') && location.href.includes('list=')) {
+    PlaylistPanelInfo.init();
+}
