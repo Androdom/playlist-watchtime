@@ -444,8 +444,9 @@ const MainApp = {
             // Periodically ensure the panel hasn't been nuked by YouTube's DOM updates
             this.ensurePanel();
 
-            chrome.storage.local.get('autoscroll', (data) => {
+            chrome.storage.local.get(['autoscroll', 'resumeWhereLeftOff'], (data) => {
                 const autoScrollEnabled = data.autoscroll !== false;
+                const resumeWhereLeftOff = data.resumeWhereLeftOff === true;
 
                 // Fix 2: Prevent infinite loop when hidden/private videos exist
                 const hasNewVideos = current > (this.lastVideoCount || 0);
@@ -476,7 +477,25 @@ const MainApp = {
                     if (loader) loader.style.display = 'none';
 
                     // Scroll back to top only if we actually did some scrolling
-                    if (autoScrollEnabled && !isStuck) window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (autoScrollEnabled && !isStuck) {
+                        if (resumeWhereLeftOff) {
+                            const rows = YTParser.getPlaylistRows();
+                            let lastWatchedRow = null;
+                            for (let i = rows.length - 1; i >= 0; i--) {
+                                if (rows[i].querySelector('ytd-thumbnail-overlay-resume-playback-renderer')) {
+                                    lastWatchedRow = rows[i];
+                                    break;
+                                }
+                            }
+                            if (lastWatchedRow) {
+                                lastWatchedRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            } else {
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }
+                        } else {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }
                 }
             });
         }, 2000);

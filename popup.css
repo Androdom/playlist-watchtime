@@ -292,8 +292,7 @@ footer {
 
 .checkbox-label {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    align-items: flex-start;
     gap: 8px;
     cursor: pointer;
     color: var(--text-main);
@@ -308,12 +307,13 @@ footer {
     accent-color: var(--accent);
 }
 
-#txt-playlist-speed-info {
+.checkbox-label span {
     display: inline-block;
     flex: 1 1 auto;
     min-width: 0;
     white-space: normal;
     word-break: break-word;
+    margin-top: -1px; /* Align visually with the checkbox */
 }
 
 .checkbox-label:hover {
