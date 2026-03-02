@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // GitHub link
     githubBtn.onclick = () => {
-        window.open('https://github.com/Androdom/youtube-playlist-watchtime/', '_blank');
+        window.open('https://github.com/Androdom/playlist-watchtime', '_blank');
     };
 
 
