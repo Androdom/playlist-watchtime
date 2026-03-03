@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     langSelect.value === 'fr' ? "Redirection vers le formulaire de commentaires..." :
                                         langSelect.value === 'hi' ? "आपको फीडबैक फॉर्म पर ले जाया जा रहा है..." :
                                             langSelect.value === 'ja' ? "フィードバックフォームに転送しています..." :
-                                                langSelect.value === 'kk' ? "Пікірлер түрін ашуға бағыттап тұрмыз..." :
+                                                langSelect.value === 'kk' ? "Pikirler türin ashwğa bağıttap turmyz..." :
                                                     langSelect.value === 'ko' ? "피드백 양식으로 이동 중입니다..." :
                                                         langSelect.value === 'ru' ? "Перенаправление на форму обратной связи..." :
                                                             langSelect.value === 'tr' ? "Geri bildirim formuna yönlendiriliyorsunuz..." :
@@ -254,9 +254,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     hope: "Unağany dep oylaymyz!",
                     github: "🛠️ GitHub",
                     madeBy: "Androdom ishinde jasalgan",
-                    features: "ЕРЕКШЕЛІКТЕР",
-                    playlistSpeedInfo: "Ойнау тізімі панелінде жылдамдық/ұзақтық мәліметін көрсет",
-                    resumeWhereLeftOff: "Тоқтаған жерден жалғастыру"
+                    features: "EREKSHELIKTER",
+                    playlistSpeedInfo: "Oynaw tizimi panelinde jyldamdyq/uzaqtyq mälimetin körset",
+                    resumeWhereLeftOff: "Toqtağan jerden jalğastyrw"
                 },
                 ko: {
                     title: "YouTube 재생목록 시청 시간 계산기",
