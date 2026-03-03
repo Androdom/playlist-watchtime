@@ -791,15 +791,119 @@ const MainApp = {
     }
 };
 
+const VideoSpeedInfo = {
+    currentVideo: null,
+
+    init() {
+        this.setupObserver();
+        const video = document.querySelector('video.html5-main-video');
+        if (video) this.attachToVideo(video);
+    },
+
+    setupObserver() {
+        if (this.observer) return;
+        this.observer = new MutationObserver(() => {
+            const video = document.querySelector('video.html5-main-video');
+            if (video && video !== this.currentVideo) {
+                this.attachToVideo(video);
+            }
+        });
+        
+        const playerContainer = document.getElementById('movie_player') || document.body;
+        this.observer.observe(playerContainer, { childList: true, subtree: true });
+    },
+
+    attachToVideo(video) {
+        if (this.currentVideo === video) return;
+        this.currentVideo = video;
+        
+        const updateFn = () => this.updateDisplay();
+        
+        video.addEventListener('ratechange', updateFn);
+        video.addEventListener('timeupdate', updateFn);
+        video.addEventListener('loadedmetadata', updateFn);
+        
+        this.updateDisplay();
+    },
+
+    updateDisplay() {
+        if (!this.currentVideo) return;
+        const video = this.currentVideo;
+        const speed = video.playbackRate;
+        
+        let container = document.getElementById('yt-speed-remaining-time');
+        
+        if (!container) {
+            const timeDisplay = document.querySelector('.ytp-time-display:not(.ytp-live)');
+            if (timeDisplay) {
+                // timeDisplay is typically a flex or block container. We insert the pill directly inside.
+                container = YTUI.createElement('span', {
+                    id: 'yt-speed-remaining-time',
+                    style: {
+                        marginLeft: '8px',
+                        color: '#fff',
+                        backgroundColor: 'rgba(3, 0, 0, 0.3)', // Matches YouTube's semi-transparent badges ("Bu videoda" etc).
+                        padding: '12px 8px',
+                        borderRadius: '20px', // Fully rounded pill
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        display: 'none',
+                        verticalAlign: 'middle',
+                        position: 'relative',
+                        top: '-16px', // Nudge up to align better with text
+                        cursor: 'default',
+                        whiteSpace: 'nowrap',
+                        lineHeight: 'normal'
+                    }
+                });
+                timeDisplay.appendChild(container);
+            } else {
+                return;
+            }
+        }
+        
+        if (speed === 1) {
+            container.style.display = 'none';
+            return;
+        }
+        
+        container.style.display = 'inline-block';
+        
+        const remainingSeconds = (video.duration - video.currentTime) / speed;
+        if (isNaN(remainingSeconds) || !isFinite(remainingSeconds) || remainingSeconds < 0) {
+            container.textContent = '';
+            return;
+        }
+        
+        // Custom colon formatter to display 1:02 instead of 1m 2s
+        const formatColon = (s) => {
+            if (!s || s <= 0) return '0:00';
+            const h = Math.floor(s / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            const sec = Math.floor(s % 60);
+            const pad = (num) => num.toString().padStart(2, '0');
+            if (h > 0) return `${h}:${pad(m)}:${pad(sec)}`;
+            return `${m}:${pad(sec)}`;
+        };
+        
+        const formatted = formatColon(remainingSeconds);
+        const prefix = YTi18n.t('remainingTime') || 'Remaining';
+        // E.g. "1.5x Kalan: 30:40"
+        container.textContent = `${speed}x ${prefix}: ${formatted}`;
+    }
+};
+
 document.addEventListener('yt-navigate-finish', () => {
     MainApp.init();
-    if (location.href.includes('watch?v=') && location.href.includes('list=')) {
-        PlaylistPanelInfo.init();
+    if (location.href.includes('watch?v=')) {
+        if (location.href.includes('list=')) PlaylistPanelInfo.init();
+        VideoSpeedInfo.init();
     }
 });
 if (location.href.includes('list=')) {
     MainApp.init();
 }
-if (location.href.includes('watch?v=') && location.href.includes('list=')) {
-    PlaylistPanelInfo.init();
+if (location.href.includes('watch?v=')) {
+    if (location.href.includes('list=')) PlaylistPanelInfo.init();
+    VideoSpeedInfo.init();
 }

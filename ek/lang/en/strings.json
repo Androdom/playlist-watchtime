@@ -17,5 +17,6 @@
     "m": "m",
     "s": "s",
     "features": "FEATURES",
-    "playlistSpeedInfo": "Playlist speed summaries (shown beside the video)"
+    "playlistSpeedInfo": "Playlist speed summaries (shown beside the video)",
+    "remainingTime": "Remaining"
 }
