@@ -1,48 +1,101 @@
 # YouTube Playlist Watch Time Calculator 🕒
 
-A powerful and elegant browser extension to calculate the total duration of YouTube playlists at various playback speeds. Designed with a premium look and multi-language support.
+> A powerful browser extension that calculates the total watch time of any YouTube playlist — with multi-speed support, custom ranges, and a beautifully designed settings panel.
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Manifest Version](https://img.shields.io/badge/Manifest-V3-brightgreen.svg)](manifest.json)
+[![Languages](https://img.shields.io/badge/Languages-14-orange.svg)](#-localization)
+
+---
 
 ## ✨ Features
 
-- **Dynamic Calculation:** Instantly calculates the total watch time of any YouTube playlist.
-- **Custom Range Selection:** Select specific start and end points within a playlist to calculate partial durations.
-- **Playback Speed Support:** View how long it will take to watch the playlist at 1x, 1.25x, 1.5x, 2x, or a custom speed.
-- **Visual Progress:** See exactly how many videos are counted and loaded in real-time.
-- **Premium UI:** Beautifully crafted settings popup with:
-  - **Themes:** Light, Dark, and OLED (Pure Black) modes.
-  - **Localization:** Full support for 14 languages including English, Turkish, Spanish, Arabic, Russian, French, German, Chinese, Hindi, Japanese, Korean, Kazakh, Azerbaijani, and Indonesian.
-  - **Dynamic Updates:** Language and theme changes apply instantly without page refreshes.
-- **Universal Support:** Works seamlessly on both playlist pages and watch pages with sidebars.
+- **⚡ Instant Calculation** — Automatically detects and calculates the total duration of any YouTube playlist as soon as the page loads.
+- **🎯 Custom Range Selection** — Choose a specific start and end video index to calculate the watch time for any portion of a playlist.
+- **🚀 Playback Speed Support** — See adjusted durations at 1×, 1.25×, 1.5×, 2×, or a fully custom playback speed.
+- **📊 Real-time Progress** — A live counter shows how many videos have been loaded and counted so far.
+- **🎨 Premium UI & Theming** — A carefully designed settings popup with three built-in themes:
+  - ☀️ **Light** — Clean and minimal.
+  - 🌙 **Dark** — Easy on the eyes at night.
+  - ⬛ **OLED** — Pure black for AMOLED displays.
+- **🌍 14 Languages** — Full localization support with instant switching (no page refresh required).
+- **🔌 Universal Compatibility** — Works on both `/playlist` pages and `/watch` pages with a video sidebar.
+- **🔒 Privacy First** — Requires only the `storage` permission. No data is ever collected or transmitted.
 
-## 📁 Directory Structure
-
-```
-/root
- ├─ manifest.json     # Extension metadata (MV3)
- ├─ content-script.js # Core logic for YouTube interaction
- ├─ content.css       # Styles for the on-page calculator panel
- ├─ popup.html        # Settings interface
- ├─ popup.js          # Settings logic & theme management
- ├─ popup.css         # Premium design system
- └─ ek/               # Assets & Localization
-     ├─ lang/         # JSON translation files (14 languages)
-     └─ *.png         # Extension icons
-```
-
-## 🛠 Installation (Development)
-
-1. Clone or download this repository.
-2. Open your browser:
-   - **Firefox:** Type `about:debugging` -> This Firefox -> Load Temporary Add-on -> Select `manifest.json`.
-   - **Chrome:** Type `chrome://extensions` -> Enable "Developer mode" -> Load unpacked -> Select the project folder.
+---
 
 ## 🌍 Localization
 
-The extension is designed to be easily translatable. The current version supports 14 languages: Azerbaijani, English, French, German, Hindi, Indonesian, Japanese, Kazakh, Korean, Russian, Spanish, Turkish, Arabic, and Chinese.
+The extension is fully localized into **14 languages**:
+
+| Code | Language     | Code | Language    |
+|------|-------------|------|-------------|
+| `ar` | Arabic       | `ja` | Japanese    |
+| `az` | Azerbaijani  | `kk` | Kazakh      |
+| `de` | German       | `ko` | Korean      |
+| `en` | English      | `ru` | Russian     |
+| `es` | Spanish      | `tr` | Turkish     |
+| `fr` | French       | `zh` | Chinese     |
+| `hi` | Hindi        | `id` | Indonesian  |
+
+Translation files are located in `ek/lang/<code>/strings.json`. Adding a new language is as simple as creating a new folder with a `strings.json` file.
+
+---
+
+## 📁 Project Structure
+
+```
+youtube-playlist-watchtime/
+├── manifest.json          # Extension manifest (Manifest V3)
+├── content-script.js      # Core logic: playlist parsing & UI injection
+├── content.css            # Styles for the injected on-page calculator panel
+├── popup.html             # Settings popup structure
+├── popup.js               # Settings logic, theme & language management
+├── popup.css              # Premium design system for the settings popup
+├── PRIVACY_POLICY.md      # Privacy policy
+├── LICENSE                # Apache 2.0 License
+└── ek/
+    ├── lang/              # Localization files
+    │   ├── en/strings.json
+    │   ├── tr/strings.json
+    │   └── ...            # 14 languages total
+    └── icon-*.png         # Extension icons (16px – 128px)
+```
+
+---
+
+## 🛠️ Installation (Developer Mode)
+
+### Firefox
+1. Open Firefox and navigate to `about:debugging`.
+2. Click **"This Firefox"** in the left sidebar.
+3. Click **"Load Temporary Add-on…"**.
+4. Select the `manifest.json` file from this project folder.
+
+### Chrome / Edge / Brave
+1. Open your browser and navigate to `chrome://extensions` (or `edge://extensions`).
+2. Enable **"Developer mode"** using the toggle in the top-right corner.
+3. Click **"Load unpacked"**.
+4. Select the root project folder.
+
+---
+
+## 🔑 Permissions
+
+| Permission | Reason |
+|-----------|--------|
+| `storage` | Saves your theme and language preferences locally. |
+| `*://*.youtube.com/*` | Required to read playlist data and inject the calculator UI on YouTube pages. |
+
+No other permissions are requested. No data leaves your device.
+
+---
 
 ## ⚖️ License
 
-Licensed under Apache License 2.0. For more information, visit [androdom.com.tr](https://www.androdom.com.tr).
+This project is licensed under the **Apache License 2.0**.
+See the [LICENSE](LICENSE) file for full details, or visit [androdom.com.tr](https://www.androdom.com.tr).
 
 ---
-*Created with ❤️ by Androdom.*
+
+*Made with ❤️ by [Androdom](https://www.androdom.com.tr)*
