@@ -1,14 +1,16 @@
 {
   "manifest_version": 3,
   "name": "YouTube Playlist Watch Time Calculator",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Calculate the total watch time of a YouTube playlist at different playback speeds.",
   "browser_specific_settings": {
     "gecko": {
       "id": "youtube-playlist-watchtime@androdom.com.tr",
       "strict_min_version": "142.0",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     }
   },
