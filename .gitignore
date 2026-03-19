@@ -159,3 +159,6 @@ desktop.ini
 *.crx
 *.xpi
 web-ext-artifacts/
+
+# Project Management
+TODO.md
