@@ -60,11 +60,20 @@ It automatically sums up all video durations—even as you scroll and load more 
 
 ## 📸 Previews
 
-> *Note: Place your screenshots in the `screenshots/` folder to make them visible here.*
-
 <div align="center">
-  <img src="screenshots/preview-1.png" width="400" alt="Extension in action on YouTube" />
-  <img src="screenshots/preview-2.png" width="400" alt="Settings Popup Themes" />
+  <p><strong>Actual Extension Running on YouTube:</strong></p>
+  <img src="screenshots/playlist-light-1.png" width="400" alt="Playlist Overview (Light Mode)" />
+  <img src="screenshots/ss-dark-lang-bigcount.png" width="400" alt="Dark Theme Integration" />
+  
+  <br/><br/>
+  <p><strong>Advanced UI & Functionality:</strong></p>
+  <img src="screenshots/ss-light-popup.png" width="400" alt="Light Popup Calculator" />
+  <img src="screenshots/ss-oled-hidedvideos.png" width="400" alt="OLED Theme & Hidden Videos" />
+  
+  <br/><br/>
+  <p><strong>Premium Settings Panel:</strong></p>
+  <img src="screenshots/popup-new-dark.png" width="400" alt="New Dark Settings Popup" />
+  <img src="screenshots/ss-popup-language.png" width="400" alt="Massive Localization (Language Dropdown)" />
 </div>
 
 ---
