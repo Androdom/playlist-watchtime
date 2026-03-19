@@ -5,7 +5,7 @@
   "description": "Calculate exact YouTube playlist length at custom speeds. A powerful YouTube playlist time calculator to save your watch time!",
   "browser_specific_settings": {
     "gecko": {
-      "id": "c93a8d11@androdom",
+      "id": "watchtime@androdom",
       "strict_min_version": "142.0",
       "data_collection_permissions": {
         "required": [

@@ -359,14 +359,7 @@ input[type="range"] {
 }
 
 .speed-info-box .speed-duration {
-    font-size: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.speed-info-box .speed-duration {
-    color: var(--yt-spec-text-secondary, #ccc);
+    color: #ffffff;
     font-size: 10px;
     line-height: 1;
     white-space: nowrap;
@@ -389,5 +382,5 @@ input[type="range"] {
 }
 
 .yt-playlist-speed-info.oled-theme .speed-info-box .speed-duration {
-    color: #aaaaaa;
+    color: #ffffff;
 }
