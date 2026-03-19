@@ -15,7 +15,7 @@
   <p>
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square" alt="License" /></a>
     <a href="manifest.json"><img src="https://img.shields.io/badge/Manifest-V3-brightgreen.svg?style=flat-square" alt="Manifest V3" /></a>
-    <img src="https://img.shields.io/badge/Languages-14-orange.svg?style=flat-square" alt="Languages" />
+    <img src="https://img.shields.io/badge/Languages-16-orange.svg?style=flat-square" alt="Languages" />
     <a href="PRIVACY_POLICY.md"><img src="https://img.shields.io/badge/Privacy-First-success.svg?style=flat-square" alt="Privacy First" /></a>
   </p>
 </div>
@@ -53,7 +53,7 @@ It automatically sums up all video durations—even as you scroll and load more 
   - ☀️ **Light:** Clean, vibrant, and contrast-rich.
   - 🌙 **Dark:** Easy on the eyes for night sessions.
   - ⬛ **OLED:** True dark black to save power & reduce glare.
-- **🌍 Massive Localization:** Fully translated into **14 major languages** with real-time UI switching (no page refresh required).
+- **🌍 Massive Localization:** Fully translated into **16 major languages** with real-time UI switching (no page refresh required).
 - **🔒 Privacy First Architecture:** Runs 100% locally. Zero telemetry, zero analytics, zero data transmission.
 
 ---
@@ -110,8 +110,8 @@ Currently supported out-of-the-box:
 | Arabic `(ar)` | Azerbaijani `(az)` | Chinese `(zh)` | English `(en)` |
 | :---: | :---: | :---: | :---: |
 | **French** `(fr)` | **German** `(de)` | **Hindi** `(hi)` | **Indonesian** `(id)` |
-| **Japanese** `(ja)` | **Kazakh** `(kk)` | **Korean** `(ko)` | **Russian** `(ru)` |
-| **Spanish** `(es)` | **Turkish** `(tr)` | | |
+| **Italian** `(it)` | **Japanese** `(ja)` | **Kazakh** `(kk)` | **Korean** `(ko)` |
+| **Portuguese** `(pt)` | **Russian** `(ru)` | **Spanish** `(es)` | **Turkish** `(tr)` |
 
 ---
 

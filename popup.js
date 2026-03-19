@@ -76,12 +76,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         langSelect.value === 'zh' ? "正在转向反馈表单..." :
                             langSelect.value === 'en' ? "Taking you to feedback form..." :
                                 langSelect.value === 'id' ? "Membawa Anda ke formulir umpan balik..." :
-                                    langSelect.value === 'fr' ? "Redirection vers le formulaire de commentaires..." :
+                                    langSelect.value === 'it' ? "Reindirizzamento al modulo di feedback..." :
+                                        langSelect.value === 'fr' ? "Redirection vers le formulaire de commentaires..." :
                                         langSelect.value === 'hi' ? "आपको फीडबैक फॉर्म पर ले जाया जा रहा है..." :
                                             langSelect.value === 'ja' ? "フィードバックフォームに転送しています..." :
                                                 langSelect.value === 'kk' ? "Pikirler türin ashwğa bağıttap turmyz..." :
                                                     langSelect.value === 'ko' ? "피드백 양식으로 이동 중입니다..." :
-                                                        langSelect.value === 'ru' ? "Перенаправление на форму обратной связи..." :
+                                                        langSelect.value === 'pt' ? "Redirecionando para o formulário de feedback..." :
+                                                            langSelect.value === 'ru' ? "Перенаправление на форму обратной связи..." :
                                                             langSelect.value === 'tr' ? "Geri bildirim formuna yönlendiriliyorsunuz..." :
                                                                 langSelect.value === 'es' ? "Redirigiendo al formulario..." :
                                                                     "Taking you to feedback form...";
@@ -231,6 +233,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                     playlistSpeedInfo: "Tampilkan informasi kecepatan/durasi di panel playlist",
                     resumeWhereLeftOff: "Lanjutkan di mana saya tinggalkan"
                 },
+                it: {
+                    title: "Calcolatore Durata e Tempo Playlist YouTube",
+                    appearance: "ASPETTO",
+                    light: "Chiaro",
+                    dark: "Scuro",
+                    oled: "OLED",
+                    language: "LINGUA",
+                    rate: "VALUTA L'APP",
+                    hope: "Speriamo ti piaccia!",
+                    github: "🛠️ GitHub",
+                    madeBy: "Creato da Androdom",
+                    features: "FUNZIONALITÀ",
+                    playlistSpeedInfo: "Mostra info velocità/durata nel pannello playlist",
+                    resumeWhereLeftOff: "Riprendi dove ero rimasto"
+                },
                 ja: {
                     title: "YouTubeプレイリストの長さと時間計算機",
                     appearance: "外観",
@@ -275,6 +292,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                     features: "기능",
                     playlistSpeedInfo: "재생목록 패널에서 속도/시청시간 정보 표시",
                     resumeWhereLeftOff: "중단한 부분부터 다시 시작"
+                },
+                pt: {
+                    title: "Calculadora de Tempo e Duração de Playlist do YouTube",
+                    appearance: "APARÊNCIA",
+                    light: "Claro",
+                    dark: "Escuro",
+                    oled: "OLED",
+                    language: "IDIOMA",
+                    rate: "AVALIE O APP",
+                    hope: "Esperamos que você goste!",
+                    github: "🛠️ GitHub",
+                    madeBy: "Feito por Androdom",
+                    features: "RECURSOS",
+                    playlistSpeedInfo: "Mostrar info de velocidade/duração no painel da playlist",
+                    resumeWhereLeftOff: "Retomar de onde parei"
                 },
                 ru: {
                     title: "YouTube Калькулятор длины и времени плейлиста",

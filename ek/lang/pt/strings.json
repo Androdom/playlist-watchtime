@@ -1,0 +1,22 @@
+{
+    "header": "CALCULADORA DE PLAYLIST YOUTUBE",
+    "selected": "Selecionado:",
+    "duration1x": "Dura\u00e7\u00e3o (1x):",
+    "duration15x": "Dura\u00e7\u00e3o (1.5x):",
+    "duration2x": "Dura\u00e7\u00e3o (2x):",
+    "customSpeed": "Velocidade Pers.:",
+    "customDuration": "Dura\u00e7\u00e3o Pers.:",
+    "rangeSelection": "Sele\u00e7\u00e3o de Intervalo:",
+    "start": "In\u00edcio:",
+    "end": "Fim:",
+    "video": "V\u00eddeo",
+    "videosCounted": "V\u00eddeos contados:",
+    "videosNotCounted": "N\u00e3o contados:",
+    "loading": "Ao carregar",
+    "h": "h",
+    "m": "m",
+    "s": "s",
+    "features": "RECURSOS",
+    "playlistSpeedInfo": "Resumo de velocidade da playlist (mostrado ao lado do v\u00eddeo)",
+    "remainingTime": "Restante"
+}
