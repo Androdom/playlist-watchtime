@@ -1,10 +1,10 @@
 <div align="center">
   <img src="ek/icon-128.png" alt="Logo" width="128" height="128" />
 
-  # 🕒 YouTube Playlist Watch Time Calculator
+  # 🕒 YouTube Playlist Length & Time Calculator
 
   <p>
-    <strong>A powerful, highly polished browser extension to calculate the total watch time of any YouTube playlist.</strong>
+    <strong>Calculate exact YouTube playlist length at custom speeds. A powerful YouTube playlist time calculator to save your watch time!</strong>
   </p>
 
   <p>
@@ -37,7 +37,7 @@
 
 ## 🚀 About the Project
 
-Have you ever looked at a YouTube playlist with 150 videos and wondered precisely how long it would take to finish? **YouTube Playlist Watch Time Calculator** effortlessly answers this by overlaying an elegant, non-intrusive panel on YouTube pages. 
+Have you ever looked at a YouTube playlist with 150 videos and wondered precisely how long it would take to finish? **YouTube Playlist Length & Time Calculator** effortlessly answers this by overlaying an elegant, non-intrusive panel on YouTube pages. 
 
 It automatically sums up all video durations—even as you scroll and load more videos—and provides instantly calculated custom playback speeds (1.25x, 1.5x, 2x, etc.) so you can plan your time effectively.
 
@@ -48,6 +48,7 @@ It automatically sums up all video durations—even as you scroll and load more 
 - **⚡ Instant & Live Calculation:** Detects video timestamps on the fly. As YouTube loads more videos via infinite scroll, the watch time updates instantly.
 - **🎯 Precise Range Selection:** Don't care about the first 10 videos? Input a custom `Start` and `End` index to calculate watch time for a specific chunk of the playlist.
 - **🚀 Playback Speed Modifiers:** See exactly how much time you save by watching at 1.25×, 1.5×, 1.75×, 2.0×, or your own custom speed factor.
+- **⏱️ Live Remaining Time:** Not just for playlists! Calculates the exact remaining time of the currently playing video, dynamically adjusted to your active playback speed.
 - **🎨 Premium Theming:** A beautifully crafted popup UI with 3 built-in themes:
   - ☀️ **Light:** Clean, vibrant, and contrast-rich.
   - 🌙 **Dark:** Easy on the eyes for night sessions.

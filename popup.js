@@ -14,10 +14,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (settings.theme) {
         setTheme(settings.theme);
     }
-    if (settings.lang) {
-        langSelect.value = settings.lang;
-        updateLocaleContent(settings.lang);
-    }
+    // Auto-detect browser language if not set, fallback to 'en'
+    const supportedLangs = Array.from(langSelect.options).map(opt => opt.value);
+    const browserLang = (chrome.i18n.getUILanguage && chrome.i18n.getUILanguage().split('-')[0]) || 'en';
+    const activeLang = settings.lang || (supportedLangs.includes(browserLang) ? browserLang : 'en');
+    
+    langSelect.value = activeLang;
+    updateLocaleContent(activeLang);
     if (playlistSpeedInfoToggle) {
         playlistSpeedInfoToggle.checked = settings.playlistSpeedInfo !== false;
         playlistSpeedInfoToggle.onchange = () => {
@@ -109,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const translations = {
                 ar: {
-                    title: "YouTube حاسبة وقت التشغيل",
+                    title: "YouTube حاسبة طول ووقت قائمة التشغيل",
                     appearance: "المظهر",
                     light: "فاتح",
                     dark: "داكن",
@@ -124,7 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "المتابعة من حيث توقفت"
                 },
                 az: {
-                    title: "YouTube Pleylisti Saatı Kalkulyatoru",
+                    title: "YouTube Pleylist Uzunluğu və Zaman Kalkulyatoru",
                     appearance: "GÖRÜNÜŞ",
                     light: "Açıq",
                     dark: "Tünd",
@@ -139,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Qaldığım yerdən davam et"
                 },
                 de: {
-                    title: "YouTube Wiedergabezeit-Rechner",
+                    title: "YouTube Playlist Längen- und Zeitrechner",
                     appearance: "AUSSEHEN",
                     light: "Hell",
                     dark: "Dunkel",
@@ -154,7 +157,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Dort weitermachen, wo ich aufgehört habe"
                 },
                 en: {
-                    title: "YouTube Playlist Watch Time Calculator",
+                    title: "YouTube Playlist Length & Time Calculator",
                     appearance: "APPEARANCE",
                     light: "Light",
                     dark: "Dark",
@@ -169,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Resume where I left off"
                 },
                 es: {
-                    title: "YouTube Calculadora de Tiempo",
+                    title: "YouTube Calculadora de Longitud y Tiempo",
                     appearance: "APARIENCIA",
                     light: "Claro",
                     dark: "Oscuro",
@@ -184,7 +187,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Reanudar donde lo dejé"
                 },
                 fr: {
-                    title: "YouTube Calculateur de visionnage",
+                    title: "YouTube Calculateur de Longueur et Temps",
                     appearance: "APPARENCE",
                     light: "Clair",
                     dark: "Sombre",
@@ -199,7 +202,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Reprendre là où je m'étais arrêté"
                 },
                 hi: {
-                    title: "YouTube प्लेलिस्ट वॉच टाइम कैलकुलेटर",
+                    title: "YouTube प्लेलिस्ट लंबाई और समय कैलकुलेटर",
                     appearance: "रंग-रूप",
                     light: "हल्का",
                     dark: "गहरा",
@@ -214,7 +217,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "जहां मैंने छोड़ा था वहीं से फिर से शुरू करें"
                 },
                 id: {
-                    title: "Kalkulator Waktu Putar Playlist YouTube",
+                    title: "Kalkulator Panjang & Waktu Playlist YouTube",
                     appearance: "PENAMPILAN",
                     light: "Terang",
                     dark: "Gelap",
@@ -229,7 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Lanjutkan di mana saya tinggalkan"
                 },
                 ja: {
-                    title: "YouTubeプレイリスト再生時間計算機",
+                    title: "YouTubeプレイリストの長さと時間計算機",
                     appearance: "外観",
                     light: "ライト",
                     dark: "ダーク",
@@ -244,7 +247,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "前回停止したところから再開"
                 },
                 kk: {
-                    title: "YouTube Oynatw Tiziminiñ Uzaqtığın Eseptew",
+                    title: "YouTube Oynatw Tiziminiñ Uzaqtığı jäne Waaqyt Eseptegishi",
                     appearance: "KÖRÏNISÏ",
                     light: "Jarıq",
                     dark: "Qaraññğy",
@@ -259,7 +262,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Toqtağan jerden jalğastyrw"
                 },
                 ko: {
-                    title: "YouTube 재생목록 시청 시간 계산기",
+                    title: "YouTube 재생목록 길이 및 시간 계산기",
                     appearance: "모양",
                     light: "밝음",
                     dark: "어두움",
@@ -274,7 +277,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "중단한 부분부터 다시 시작"
                 },
                 ru: {
-                    title: "YouTube Калькулятор времени",
+                    title: "YouTube Калькулятор длины и времени плейлиста",
                     appearance: "ВНЕШНИЙ ВИД",
                     light: "Светлая",
                     dark: "Темная",
@@ -289,7 +292,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Продолжить с того места, где остановился"
                 },
                 tr: {
-                    title: "YouTube Oynatma Listesi Hesaplayıcı",
+                    title: "YouTube Oynatma Listesi Uzunluk ve Zaman Hesaplayıcı",
                     appearance: "GÖRÜNÜM",
                     light: "Aydınlık",
                     dark: "Karanlık",
@@ -304,7 +307,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resumeWhereLeftOff: "Kaldığım yerden devam et"
                 },
                 zh: {
-                    title: "YouTube 播放列表时长计算器",
+                    title: "YouTube 播放列表长度和时间计算器",
                     appearance: "外观",
                     light: "浅色",
                     dark: "深色",

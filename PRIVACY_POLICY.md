@@ -2,7 +2,7 @@
 
 **Last Updated:** March 19, 2026
 
-**YouTube Playlist Watch Time Calculator** ("we", "our", or "the extension") is deeply committed to protecting your privacy and security. This policy transparently explains our data practices.
+**YouTube Playlist Length & Time Calculator** ("we", "our", or "the extension") is deeply committed to protecting your privacy and security. This policy transparently explains our data practices.
 
 ## 1. Zero Data Collection & Analytics
 We firmly believe in data minimization. The extension does **not** collect, store, transmit, or share any personal data, usage metrics, web requests, analytics (e.g., Google Analytics), or telemetry. There are no tracking scripts or background servers monitoring your activity.
@@ -31,7 +31,7 @@ This is an independent, community-driven project explicitly developed to improve
 
 **Son Güncelleme:** 19 Mart 2026
 
-**YouTube Playlist Watch Time Calculator** ("biz", "bizim" veya "eklenti") gizliliğinizi ve güvenliğinizi korumaya son derece önem verir. Bu politika, veri pratiklerimizi şeffaf bir şekilde açıklamaktadır.
+**YouTube Playlist Length & Time Calculator** ("biz", "bizim" veya "eklenti") gizliliğinizi ve güvenliğinizi korumaya son derece önem verir. Bu politika, veri pratiklerimizi şeffaf bir şekilde açıklamaktadır.
 
 ## 1. Sıfır Veri Toplama ve Analitik
 Veri minimizasyonuna inanıyoruz. Eklentimiz hiçbir kişisel veriyi, kullanım ölçümünü, web isteğini, analitik verisini (örn. Google Analytics) veya telemetriyi **toplamaz**, saklamaz, iletmez ve paylaşmaz. Arka planda etkinliğinizi izleyen hiçbir takip betiği (tracking script) veya sunucu yoktur.
