@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const supportedLangs = Array.from(langSelect.options).map(opt => opt.value);
     const browserLang = (chrome.i18n.getUILanguage && chrome.i18n.getUILanguage().split('-')[0]) || 'en';
     const activeLang = settings.lang || (supportedLangs.includes(browserLang) ? browserLang : 'en');
-    
+
     langSelect.value = activeLang;
     updateLocaleContent(activeLang);
     if (playlistSpeedInfoToggle) {
@@ -78,20 +78,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 langSelect.value === 'id' ? "Membawa Anda ke formulir umpan balik..." :
                                     langSelect.value === 'it' ? "Reindirizzamento al modulo di feedback..." :
                                         langSelect.value === 'fr' ? "Redirection vers le formulaire de commentaires..." :
-                                        langSelect.value === 'hi' ? "आपको फीडबैक फॉर्म पर ले जाया जा रहा है..." :
-                                            langSelect.value === 'ja' ? "フィードバックフォームに転送しています..." :
-                                                langSelect.value === 'kk' ? "Pikirler türin ashwğa bağıttap turmyz..." :
-                                                    langSelect.value === 'ko' ? "피드백 양식으로 이동 중입니다..." :
-                                                        langSelect.value === 'pt' ? "Redirecionando para o formulário de feedback..." :
-                                                            langSelect.value === 'ru' ? "Перенаправление на форму обратной связи..." :
-                                                            langSelect.value === 'tr' ? "Geri bildirim formuna yönlendiriliyorsunuz..." :
-                                                                langSelect.value === 'es' ? "Redirigiendo al formulario..." :
-                                                                    "Taking you to feedback form...";
+                                            langSelect.value === 'hi' ? "आपको फीडबैक फॉर्म पर ले जाया जा रहा है..." :
+                                                langSelect.value === 'ja' ? "フィードバックフォームに転送しています..." :
+                                                    langSelect.value === 'kk' ? "Pikirler türin ashwğa bağıttap turmyz..." :
+                                                        langSelect.value === 'ko' ? "피드백 양식으로 이동 중입니다..." :
+                                                            langSelect.value === 'pt' ? "Redirecionando para o formulário de feedback..." :
+                                                                langSelect.value === 'ru' ? "Перенаправление на форму обратной связи..." :
+                                                                    langSelect.value === 'tr' ? "Geri bildirim formuna yönlendiriliyorsunuz..." :
+                                                                        langSelect.value === 'es' ? "Redirigiendo al formulario..." :
+                                                                            "Taking you to feedback form...";
 
             ratingText.textContent = msg;
             setTimeout(() => {
                 // 1-2 stars: feedback form, 3-5 stars: Firefox Add-ons store
-                const url = val <= 2 ? 'https://forms.gle/Xfn4FT3jYYEEmgNP7' : 'https://addons.mozilla.org/en-US/firefox/addon/youtube-playlist-watch-time/';
+                const url = val <= 2 ? 'https://forms.gle/Xfn4FT3jYYEEmgNP7' : 'https://addons.mozilla.org/en-US/firefox/addon/watchtime-calc/';
                 window.open(url, '_blank');
                 updateLocaleContent(langSelect.value); // Reset localized text
             }, 1500);
