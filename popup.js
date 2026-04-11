@@ -3,12 +3,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const langSelect = document.getElementById('lang-select');
     const playlistSpeedInfoToggle = document.getElementById('playlist-speed-info-toggle');
     const resumeWhereLeftOffToggle = document.getElementById('resume-where-left-off-toggle');
+    const syncStartWithResumeToggle = document.getElementById('sync-start-with-resume-toggle');
     const stars = document.querySelectorAll('.star');
     const ratingText = document.getElementById('rating-text');
     const githubBtn = document.getElementById('github-btn');
 
     // Load settings
-    const settings = await chrome.storage.local.get(['theme', 'lang', 'autoscroll', 'playlistSpeedInfo', 'resumeWhereLeftOff']);
+    const settings = await chrome.storage.local.get(['theme', 'lang', 'autoscroll', 'playlistSpeedInfo', 'resumeWhereLeftOff', 'syncStartWithResume']);
 
     // Set initial UI
     if (settings.theme) {
@@ -33,6 +34,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             chrome.storage.local.set({ resumeWhereLeftOff: resumeWhereLeftOffToggle.checked });
         };
     }
+    if (syncStartWithResumeToggle) {
+        syncStartWithResumeToggle.checked = settings.syncStartWithResume === true;
+        syncStartWithResumeToggle.onchange = () => {
+            chrome.storage.local.set({ syncStartWithResume: syncStartWithResumeToggle.checked });
+        };
+    }
+
 
     // Theme changes
     themeBtns.forEach(btn => {
@@ -126,7 +134,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "تم التطوير بواسطة Androdom",
                     features: "الميزات",
                     playlistSpeedInfo: "إظهار معلومات السرعة/المدة في لوحة التشغيل",
-                    resumeWhereLeftOff: "المتابعة من حيث توقفت"
+                    resumeWhereLeftOff: "المتابعة من حيث توقفت",
+                    syncStartWithResume: "مزامنة البداية مع آخر فيديو",
+                    tipPlaylistSpeedInfo: "يعرض سرعة التشغيل المخصصة والمدة المحسوبة",
+                    tipResumeWhereLeftOff: "يقوم بالتمرير تلقائيا إلى آخر فيديو شاهدته",
+                    tipSyncStartWithResume: "يضبط شريط البداية تلقائيا إلى آخر فيديو لحساب الوقت المتبقي"
                 },
                 az: {
                     title: "YouTube Pleylist Uzunluğu və Zaman Kalkulyatoru",
@@ -141,7 +153,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Androdom tərəfindən hazırlanmışdır",
                     features: "XÜSUSIYYƏTLƏR",
                     playlistSpeedInfo: "Pleylist panelində sürət-müddət məlumatını göstər",
-                    resumeWhereLeftOff: "Qaldığım yerdən davam et"
+                    resumeWhereLeftOff: "Qaldığım yerdən davam et",
+                    syncStartWithResume: "Başlanğıcı qaldığım videoya bərabərləşdir",
+                    tipPlaylistSpeedInfo: "Pleylist panelində fərdi sürət və hesablanmış müddəti göstərir.",
+                    tipResumeWhereLeftOff: "Pleylistə daxil olduqda avtomatik olaraq son izlədiyiniz videoya sürüşdürür.",
+                    tipSyncStartWithResume: "Qalan vaxtı hesablamaq üçün 'Başlanğıc'ı birbaşa son videoya təyin edir."
                 },
                 de: {
                     title: "YouTube Playlist Längen- und Zeitrechner",
@@ -156,7 +172,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Von Androdom erstellt",
                     features: "FUNKTIONEN",
                     playlistSpeedInfo: "Geschwindigkeits-/Dauerinformationen im Playlist-Feld anzeigen",
-                    resumeWhereLeftOff: "Dort weitermachen, wo ich aufgehört habe"
+                    resumeWhereLeftOff: "Dort weitermachen, wo ich aufgehört habe",
+                    syncStartWithResume: "Start auf zuletzt angesehen setzen",
+                    tipPlaylistSpeedInfo: "Zeigt die Wiedergabegeschwindigkeit und berechnete Dauer an.",
+                    tipResumeWhereLeftOff: "Scrollt automatisch zu dem Video, das Sie zuletzt angesehen haben.",
+                    tipSyncStartWithResume: "Setzt den 'Start'-Schieberegler auf Ihr letztes Video."
                 },
                 en: {
                     title: "YouTube Playlist Length & Time Calculator",
@@ -171,7 +191,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Made by Androdom",
                     features: "FEATURES",
                     playlistSpeedInfo: "Show speed/duration info in playlist panel",
-                    resumeWhereLeftOff: "Resume where I left off"
+                    resumeWhereLeftOff: "Resume where I left off",
+                    syncStartWithResume: "Auto-sync Start to last watched",
+                    tipPlaylistSpeedInfo: "Displays custom playback speed and calculated duration.",
+                    tipResumeWhereLeftOff: "Automatically scrolls to the last video you watched when opening a playlist.",
+                    tipSyncStartWithResume: "Automatically sets the 'Start' slider to your last watched video."
                 },
                 es: {
                     title: "YouTube Calculadora de Longitud y Tiempo",
@@ -186,7 +210,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Hecho por Androdom",
                     features: "CARACTERÍSTICAS",
                     playlistSpeedInfo: "Mostrar información de velocidad/duración en el panel de lista de reproducción",
-                    resumeWhereLeftOff: "Reanudar donde lo dejé"
+                    resumeWhereLeftOff: "Reanudar donde lo dejé",
+                    syncStartWithResume: "Sincronizar Inicio con el último visto",
+                    tipPlaylistSpeedInfo: "Muestra la velocidad de reproducción y la duración calculada.",
+                    tipResumeWhereLeftOff: "Se desplaza automáticamente al último video que vistió.",
+                    tipSyncStartWithResume: "Configura automáticamente el 'Inicio' al último video visto."
                 },
                 fr: {
                     title: "YouTube Calculateur de Longueur et Temps",
@@ -201,7 +229,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Fait par Androdom",
                     features: "FONCTIONNALITÉS",
                     playlistSpeedInfo: "Afficher les informations de vitesse/durée dans le panneau de la playlist",
-                    resumeWhereLeftOff: "Reprendre là où je m'étais arrêté"
+                    resumeWhereLeftOff: "Reprendre là où je m'étais arrêté",
+                    syncStartWithResume: "Sync. du début avec la dernière vidéo",
+                    tipPlaylistSpeedInfo: "Affiche la vitesse de lecture et la durée calculée.",
+                    tipResumeWhereLeftOff: "Fait défiler automatiquement vers la dernière vidéo regardée.",
+                    tipSyncStartWithResume: "Règle automatiquement le curseur de début sur la dernière vidéo."
                 },
                 hi: {
                     title: "YouTube प्लेलिस्ट लंबाई और समय कैलकुलेटर",
@@ -216,7 +248,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Androdom द्वारा निर्मित",
                     features: "सुविधाएँ",
                     playlistSpeedInfo: "प्लेलिस्ट पैनल में गति/अवधि की जानकारी दिखाएं",
-                    resumeWhereLeftOff: "जहां मैंने छोड़ा था वहीं से फिर से शुरू करें"
+                    resumeWhereLeftOff: "जहां मैंने छोड़ा था वहीं से फिर से शुरू करें",
+                    syncStartWithResume: "प्रारंभ को अंतिम देखे गए वीडियो से सिंक करें",
+                    tipPlaylistSpeedInfo: "कस्टम प्लेबैक गति और गणना की गई अवधि प्रदर्शित करता है।",
+                    tipResumeWhereLeftOff: "स्वचालित रूप से आपके द्वारा देखे गए अंतिम वीडियो पर स्क्रॉल करता है।",
+                    tipSyncStartWithResume: "स्वचालित रूप से 'प्रारंभ' स्लाइडर को आपके अंतिम वीडियो पर सेट करता है।"
                 },
                 id: {
                     title: "Kalkulator Panjang & Waktu Playlist YouTube",
@@ -231,7 +267,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Dibuat oleh Androdom",
                     features: "FITUR",
                     playlistSpeedInfo: "Tampilkan informasi kecepatan/durasi di panel playlist",
-                    resumeWhereLeftOff: "Lanjutkan di mana saya tinggalkan"
+                    resumeWhereLeftOff: "Lanjutkan di mana saya tinggalkan",
+                    syncStartWithResume: "Otomatis sinkronkan Awal ke yang terakhir ditonton",
+                    tipPlaylistSpeedInfo: "Menampilkan kecepatan pemutaran dan durasi yang dikalkulasi.",
+                    tipResumeWhereLeftOff: "Otomatis menggulir ke video terakhir yang Anda tonton.",
+                    tipSyncStartWithResume: "Otomatis mengatur penggeser 'Awal' ke video terakhir Anda yang ditonton."
                 },
                 it: {
                     title: "Calcolatore Durata e Tempo Playlist YouTube",
@@ -246,7 +286,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Creato da Androdom",
                     features: "FUNZIONALITÀ",
                     playlistSpeedInfo: "Mostra info velocità/durata nel pannello playlist",
-                    resumeWhereLeftOff: "Riprendi dove ero rimasto"
+                    resumeWhereLeftOff: "Riprendi dove ero rimasto",
+                    syncStartWithResume: "Sincronizza Inizio con l'ultimo visto",
+                    tipPlaylistSpeedInfo: "Mostra la velocità di riproduzione personalizzata e la durata calcolata.",
+                    tipResumeWhereLeftOff: "Scorre automaticamente all'ultimo video che stavi guardando.",
+                    tipSyncStartWithResume: "Imposta automaticamente lo slider di Inizio sull'ultimo video che hai guardato."
                 },
                 ja: {
                     title: "YouTubeプレイリストの長さと時間計算機",
@@ -261,7 +305,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Androdomが作成",
                     features: "機能",
                     playlistSpeedInfo: "プレイリストパネルに速度/期間情報を表示",
-                    resumeWhereLeftOff: "前回停止したところから再開"
+                    resumeWhereLeftOff: "前回停止したところから再開",
+                    syncStartWithResume: "開始を最後に視聴した動画と同期する",
+                    tipPlaylistSpeedInfo: "カスタム再生速度と計算された表示時間を表示します。",
+                    tipResumeWhereLeftOff: "最後に視聴した動画に自動的にスクロールします。",
+                    tipSyncStartWithResume: "『開始』スライダーを最後に視聴した動画に自動的に設定します。"
                 },
                 kk: {
                     title: "YouTube Oynatw Tiziminiñ Uzaqtığı jäne Waaqyt Eseptegishi",
@@ -276,7 +324,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Androdom ishinde jasalgan",
                     features: "EREKSHELIKTER",
                     playlistSpeedInfo: "Oynaw tizimi panelinde jyldamdyq/uzaqtyq mälimetin körset",
-                    resumeWhereLeftOff: "Toqtağan jerden jalğastyrw"
+                    resumeWhereLeftOff: "Toqtağan jerden jalğastyrw",
+                    syncStartWithResume: "Bastaudı soñğı videoğa sinhronda",
+                    tipPlaylistSpeedInfo: "Jyldamdyqty jäne eseptegen uzaqtyqty körsetedi.",
+                    tipResumeWhereLeftOff: "Oynatw tizimin aşqan kezde soñğı videoga avtomatty türde aynaldyrady.",
+                    tipSyncStartWithResume: "'Bastaw' jyljyqpasyn soñğı videoğa avtomatty türde belgileydi."
                 },
                 ko: {
                     title: "YouTube 재생목록 길이 및 시간 계산기",
@@ -291,7 +343,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Androdom이 작성함",
                     features: "기능",
                     playlistSpeedInfo: "재생목록 패널에서 속도/시청시간 정보 표시",
-                    resumeWhereLeftOff: "중단한 부분부터 다시 시작"
+                    resumeWhereLeftOff: "중단한 부분부터 다시 시작",
+                    syncStartWithResume: "시작을 마지막 시청 동기화",
+                    tipPlaylistSpeedInfo: "사용자 지정 재생 속도와 계산된 지속 시간을 표시합니다.",
+                    tipResumeWhereLeftOff: "재생 목록을 열 때 마지막으로 시청한 동영상으로 자동 스크롤합니다.",
+                    tipSyncStartWithResume: "'시작' 슬라이더를 마지막으로 시청한 동영상에 자동으로 설정합니다."
                 },
                 pt: {
                     title: "Calculadora de Tempo e Duração de Playlist do YouTube",
@@ -306,7 +362,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Feito por Androdom",
                     features: "RECURSOS",
                     playlistSpeedInfo: "Mostrar info de velocidade/duração no painel da playlist",
-                    resumeWhereLeftOff: "Retomar de onde parei"
+                    resumeWhereLeftOff: "Retomar de onde parei",
+                    syncStartWithResume: "Sincronizar Início com o último visto",
+                    tipPlaylistSpeedInfo: "Exibe a velocidade de reprodução personalizada e a duração calculada.",
+                    tipResumeWhereLeftOff: "Rola automaticamente para o último vídeo que você estava assistindo.",
+                    tipSyncStartWithResume: "Define automaticamente o controle deslizante 'Início' para o último vídeo assistido."
                 },
                 ru: {
                     title: "YouTube Калькулятор длины и времени плейлиста",
@@ -321,7 +381,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Создано Androdom",
                     features: "ФУНКЦИИ",
                     playlistSpeedInfo: "Показать информацию о скорости/продолжительности на панели плейлиста",
-                    resumeWhereLeftOff: "Продолжить с того места, где остановился"
+                    resumeWhereLeftOff: "Продолжить с того места, где остановился",
+                    syncStartWithResume: "Синхронизировать начало с последним просмотренным",
+                    tipPlaylistSpeedInfo: "Отображает пользовательскую скорость воспроизведения и рассчитанную продолжительность.",
+                    tipResumeWhereLeftOff: "Автоматически прокручивает к последнему просмотренному видео.",
+                    tipSyncStartWithResume: "Автоматически устанавливает ползунок 'Начало' на последнее видео."
                 },
                 tr: {
                     title: "YouTube Oynatma Listesi Uzunluk ve Zaman Hesaplayıcı",
@@ -336,7 +400,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "Androdom tarafından yapıldı",
                     features: "ÖZELLİKLER",
                     playlistSpeedInfo: "Oynatma listesinde hız-süre bilgisini göster",
-                    resumeWhereLeftOff: "Kaldığım yerden devam et"
+                    resumeWhereLeftOff: "Kaldığım yerden devam et",
+                    syncStartWithResume: "Başlangıcı Son İzlenene Eşitle",
+                    tipPlaylistSpeedInfo: "Oynatma listesi menüsünde dinamik hız ve süre bilgisini hesaplayarak gösterir.",
+                    tipResumeWhereLeftOff: "Bir oynatma listesini açtığınızda listeyi otomatik olarak en son izlediğiniz videoya kaydırır.",
+                    tipSyncStartWithResume: "Kalan toplam süreyi ölçebilmeniz için 'Başlangıç' kaydırıcısını otomatik olarak izlediğiniz son videoya ayarlar."
                 },
                 zh: {
                     title: "YouTube 播放列表长度和时间计算器",
@@ -351,7 +419,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     madeBy: "由 Androdom 开发",
                     features: "功能",
                     playlistSpeedInfo: "在播放列表面板中显示速度/时长信息",
-                    resumeWhereLeftOff: "从上次停下的地方继续"
+                    resumeWhereLeftOff: "从上次停下的地方继续",
+                    syncStartWithResume: "将开始同步到上次观看",
+                    tipPlaylistSpeedInfo: "显示自定义播放速度和计算出的持续时间。",
+                    tipResumeWhereLeftOff: "打开播放列表时自动滚动到您观看的最后一个视频。",
+                    tipSyncStartWithResume: "自动将“开始”滑块设置为您观看的最后一个视频。"
                 }
             };
 
@@ -367,9 +439,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('txt-playlist-speed-info').textContent = t.playlistSpeedInfo;
             const resumeTextEl = document.getElementById('txt-resume-where-left-off');
             if (resumeTextEl) resumeTextEl.textContent = t.resumeWhereLeftOff;
-            document.getElementById('label-rate').textContent = t.rate;
-            document.getElementById('rating-text').textContent = t.hope;
-            document.getElementById('txt-github').textContent = t.github;
+            const syncStartTextEl = document.getElementById('txt-sync-start-with-resume');
+            if (syncStartTextEl) syncStartTextEl.textContent = t.syncStartWithResume || t.resumeWhereLeftOff;
+            const labelRateEl = document.getElementById('label-rate');
+            if (labelRateEl) labelRateEl.textContent = t.rate;
+            
+            const ratingTextEl = document.getElementById('rating-text');
+            if (ratingTextEl) ratingTextEl.textContent = t.hope;
+            
+            const txtGithubEl = document.getElementById('txt-github');
+            if (txtGithubEl) txtGithubEl.textContent = t.github;
+            const githubBtnEl = document.getElementById('github-btn');
+            if (githubBtnEl) githubBtnEl.textContent = t.github;
+            const speedInfoToggle = document.getElementById('playlist-speed-info-toggle');
+            if (speedInfoToggle && speedInfoToggle.parentElement) speedInfoToggle.parentElement.title = t.tipPlaylistSpeedInfo || '';
+            const resumeToggle = document.getElementById('resume-where-left-off-toggle');
+            if (resumeToggle && resumeToggle.parentElement) resumeToggle.parentElement.title = t.tipResumeWhereLeftOff || '';
+            const syncToggle = document.getElementById('sync-start-with-resume-toggle');
+            if (syncToggle && syncToggle.parentElement) syncToggle.parentElement.title = t.tipSyncStartWithResume || '';
+
 
             // Insert brand color span into madeBy text (Safe for Firefox Review)
             const madeByEl = document.getElementById('txt-made-by');

@@ -444,9 +444,10 @@ const MainApp = {
             // Periodically ensure the panel hasn't been nuked by YouTube's DOM updates
             this.ensurePanel();
 
-            chrome.storage.local.get(['autoscroll', 'resumeWhereLeftOff'], (data) => {
+            chrome.storage.local.get(['autoscroll', 'resumeWhereLeftOff', 'syncStartWithResume'], (data) => {
                 const autoScrollEnabled = data.autoscroll !== false;
                 const resumeWhereLeftOff = data.resumeWhereLeftOff === true;
+                const syncStartWithResume = data.syncStartWithResume === true;
 
                 // Fix 2: Prevent infinite loop when hidden/private videos exist
                 const hasNewVideos = current > (this.lastVideoCount || 0);
@@ -476,17 +477,31 @@ const MainApp = {
                     }
                     if (loader) loader.style.display = 'none';
 
+                    const rows = YTParser.getPlaylistRows();
+                    let lastWatchedRow = null;
+                    let lastWatchedIndex = -1;
+                    
+                    for (let i = rows.length - 1; i >= 0; i--) {
+                        if (rows[i].querySelector('ytd-thumbnail-overlay-resume-playback-renderer')) {
+                            lastWatchedRow = rows[i];
+                            lastWatchedIndex = i + 1;
+                            break;
+                        }
+                    }
+
+                    if (syncStartWithResume && lastWatchedIndex > 0) {
+                        const r1 = document.getElementById('range-1');
+                        const i1 = document.getElementById('range-input-1');
+                        if (r1 && i1) {
+                            r1.value = lastWatchedIndex;
+                            i1.value = lastWatchedIndex;
+                            this.update();
+                        }
+                    }
+
                     // Scroll back to top only if we actually did some scrolling
                     if (autoScrollEnabled && !isStuck) {
                         if (resumeWhereLeftOff) {
-                            const rows = YTParser.getPlaylistRows();
-                            let lastWatchedRow = null;
-                            for (let i = rows.length - 1; i >= 0; i--) {
-                                if (rows[i].querySelector('ytd-thumbnail-overlay-resume-playback-renderer')) {
-                                    lastWatchedRow = rows[i];
-                                    break;
-                                }
-                            }
                             if (lastWatchedRow) {
                                 lastWatchedRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             } else {
