@@ -527,6 +527,8 @@ const MainApp = {
 
     findTarget() {
         const selectors = [
+            'yt-flexible-actions-view-model',
+            'yt-page-header-view-model',
             '.yt-page-header-view-model__page-header-content',
             '.metadata-action-bar',
             '.yt-flexible-actions-view-model-wiz__action-row',
@@ -728,9 +730,7 @@ const MainApp = {
         this.autoScroll();
 
         const panel = document.getElementById(panelId);
-        const target = panel?.parentElement?.querySelector('.yt-page-header-view-model__page-header-content')
-            || panel?.parentElement?.querySelector('.metadata-action-bar')
-            || panel?.parentElement?.querySelector('ytd-playlist-sidebar-primary-info-renderer #stats');
+        const target = this.findTarget();
 
         if (panel && target) {
             YTTheme.updatePanelTheme(panel, target);
