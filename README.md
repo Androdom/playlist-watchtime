@@ -9,7 +9,6 @@
 
   <p>
     <a href="https://addons.mozilla.org/en-US/firefox/addon/watchtime-calc/"><img src="https://img.shields.io/badge/Firefox-Add--on-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox Add-on" /></a>
-    <img src="https://img.shields.io/badge/Chrome-Coming%20Soon-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Coming Soon" />
   </p>
 
   <p>
@@ -21,16 +20,12 @@
   </p>
 
   <p>
-    <a href="https://github.com/Androdom/playlist-watchtime/stargazers"><img src="https://img.shields.io/github/stars/Androdom/playlist-watchtime?style=flat-square&logo=github&color=yellow" alt="GitHub Stars" /></a>
-    <a href="https://github.com/Androdom/playlist-watchtime/network/members"><img src="https://img.shields.io/github/forks/Androdom/playlist-watchtime?style=flat-square&logo=github&color=lightgray" alt="GitHub Forks" /></a>
-    <a href="https://github.com/Androdom/playlist-watchtime/issues"><img src="https://img.shields.io/github/issues/Androdom/playlist-watchtime?style=flat-square&logo=github&color=red" alt="GitHub Issues" /></a>
     <a href="https://github.com/Androdom/playlist-watchtime/commits"><img src="https://img.shields.io/github/last-commit/Androdom/playlist-watchtime?style=flat-square&logo=github&color=informational" alt="Last Commit" /></a>
     <img src="https://img.shields.io/github/repo-size/Androdom/playlist-watchtime?style=flat-square&logo=github&color=teal" alt="Repo Size" />
   </p>
 
   <p>
     <img src="https://img.shields.io/badge/Built%20with-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript" />
-    <img src="https://img.shields.io/badge/Platform-YouTube-FF0000?style=flat-square&logo=youtube&logoColor=white" alt="Platform: YouTube" />
     <img src="https://img.shields.io/badge/Tracking-None-darkgreen?style=flat-square" alt="No Tracking" />
   </p>
 </div>
