@@ -8,14 +8,30 @@
   </p>
 
   <p>
-    <a href="https://addons.mozilla.org/en-US/firefox/addon/watchtime-calc/"><img src="https://img.shields.io/badge/Firefox-Addon-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox Add-on" /></a>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/watchtime-calc/"><img src="https://img.shields.io/badge/Firefox-Add--on-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox Add-on" /></a>
+    <img src="https://img.shields.io/badge/Chrome-Coming%20Soon-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Coming Soon" />
   </p>
 
   <p>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square" alt="License" /></a>
-    <a href="manifest.json"><img src="https://img.shields.io/badge/Manifest-V3-brightgreen.svg?style=flat-square" alt="Manifest V3" /></a>
-    <img src="https://img.shields.io/badge/Languages-16-orange.svg?style=flat-square" alt="Languages" />
-    <a href="PRIVACY_POLICY.md"><img src="https://img.shields.io/badge/Privacy-First-success.svg?style=flat-square" alt="Privacy First" /></a>
+    <img src="https://img.shields.io/badge/Version-2.1.2-blueviolet?style=flat-square" alt="Version" />
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square" alt="License" /></a>
+    <a href="manifest.json"><img src="https://img.shields.io/badge/Manifest-V3-brightgreen?style=flat-square" alt="Manifest V3" /></a>
+    <img src="https://img.shields.io/badge/Languages-16-orange?style=flat-square" alt="Languages" />
+    <a href="PRIVACY_POLICY.md"><img src="https://img.shields.io/badge/Privacy-First-success?style=flat-square" alt="Privacy First" /></a>
+  </p>
+
+  <p>
+    <a href="https://github.com/Androdom/playlist-watchtime/stargazers"><img src="https://img.shields.io/github/stars/Androdom/playlist-watchtime?style=flat-square&logo=github&color=yellow" alt="GitHub Stars" /></a>
+    <a href="https://github.com/Androdom/playlist-watchtime/network/members"><img src="https://img.shields.io/github/forks/Androdom/playlist-watchtime?style=flat-square&logo=github&color=lightgray" alt="GitHub Forks" /></a>
+    <a href="https://github.com/Androdom/playlist-watchtime/issues"><img src="https://img.shields.io/github/issues/Androdom/playlist-watchtime?style=flat-square&logo=github&color=red" alt="GitHub Issues" /></a>
+    <a href="https://github.com/Androdom/playlist-watchtime/commits"><img src="https://img.shields.io/github/last-commit/Androdom/playlist-watchtime?style=flat-square&logo=github&color=informational" alt="Last Commit" /></a>
+    <img src="https://img.shields.io/github/repo-size/Androdom/playlist-watchtime?style=flat-square&logo=github&color=teal" alt="Repo Size" />
+  </p>
+
+  <p>
+    <img src="https://img.shields.io/badge/Built%20with-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript" />
+    <img src="https://img.shields.io/badge/Platform-YouTube-FF0000?style=flat-square&logo=youtube&logoColor=white" alt="Platform: YouTube" />
+    <img src="https://img.shields.io/badge/Tracking-None-darkgreen?style=flat-square" alt="No Tracking" />
   </p>
 </div>
 
@@ -89,14 +105,30 @@ It automatically sums up all video durations—even as you scroll and load more 
 
 ### 📥 Install from Official Stores
 - **[Firefox Add-ons Page](https://addons.mozilla.org/en-US/firefox/addon/watchtime-calc/)**
+- 🟡 **Chrome Web Store** — *Coming soon!* In the meantime, follow the manual installation steps below.
 
 ### 💻 Manual Installation (Developer Mode)
+
+#### 🟡 Google Chrome (and Chromium-based browsers)
+
+> This also works for **Microsoft Edge**, **Brave**, **Opera**, **Vivaldi**, and other Chromium-based browsers.
+
+1. **Download** the source code: click the green **"Code"** button on this GitHub page → **"Download ZIP"**, then extract the ZIP to a folder.
+2. Open Chrome and go to `chrome://extensions`.
+3. Enable **"Developer mode"** using the toggle in the **top-right corner**.
+4. Click **"Load unpacked"**.
+5. Browse to and select the **extracted project folder** (the one containing `manifest.json`).
+6. The extension will appear in your toolbar — pin it by clicking the 🧩 puzzle icon and then the 📌 pin next to the extension name.
+
+> ⚠️ **Note:** Manually loaded extensions are not auto-updated. To update, re-download the latest source and repeat from step 4.
 
 #### 🦊 Mozilla Firefox
 1. Open Firefox and navigate to `about:debugging`.
 2. Click **"This Firefox"** in the left sidebar.
 3. Click **"Load Temporary Add-on…"**.
 4. Select the `manifest.json` file from the extracted project folder.
+
+> ⚠️ **Note:** Temporary add-ons are removed when Firefox is closed. For a permanent install, use the [Firefox Add-ons Page](https://addons.mozilla.org/en-US/firefox/addon/watchtime-calc/).
 
 ---
 
