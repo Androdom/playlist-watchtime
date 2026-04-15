@@ -170,10 +170,17 @@ For complete transparency regarding browser extension permissions:
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create your Feature Branch using the appropriate prefix:
+   - `feat/your-feature-name` — for new features
+   - `fix/your-bug-description` — for bug fixes
+   - `docs/what-you-updated` — for documentation changes
+   - `refactor/what-you-changed` — for code refactoring
+3. Commit your Changes using conventional commit messages:
+   - `git commit -m 'feat: add playback speed memory'`
+   - `git commit -m 'fix: playlist detection on new YouTube layout'`
+   - `git commit -m 'docs: update Chrome installation guide'`
+4. Push to the Branch (`git push origin feat/your-feature-name`)
+5. Open a Pull Request targeting the `main` branch
 
 ---
 
