@@ -1,5 +1,27 @@
 const panelId = 'yt-calc-fixed-panel';
 
+const YTDebug = {
+    log(msg, data) {
+        console.log(`[YT Playlist Calc Debug] ${msg}`, data !== undefined ? data : '');
+    },
+    checkProgressBar() {
+        this.log("--- START PROGRESS BAR DIAGNOSTICS ---");
+        const rows = YTParser.getPlaylistRows();
+        if (rows.length > 0) {
+            this.log("Row HTML for Video 1:\n", rows[0].outerHTML);
+            
+            if (rows.length >= 99) {
+                this.log("Row HTML for Video 99:\n", rows[98].outerHTML);
+            } else {
+                this.log("Video 99 not found. Total rows:", rows.length);
+            }
+        } else {
+            this.log("No rows found yet.");
+        }
+        this.log("--- END DIAGNOSTICS ---");
+    }
+};
+
 const YTi18n = {
     strings: {},
     async init() {
@@ -52,7 +74,72 @@ const YTParser = {
         return parts[0] || 0;
     },
     getPlaylistRows() {
-        return document.querySelectorAll('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer');
+        let rows = Array.from(document.querySelectorAll('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer, ytd-rich-item-renderer'));
+        
+        // In SPA, old hidden pages might still be in DOM. Filter them out first.
+        rows = rows.filter(row => this.isElementVisible(row));
+
+        if (rows.length === 0) {
+            const timeOverlays = document.querySelectorAll('ytd-thumbnail-overlay-time-status-renderer, yt-thumbnail-badge-view-model, badge-shape, .badge-shape-wiz__text, ytd-thumbnail-overlay-playback-status-renderer');
+            const rowSet = new Set();
+            timeOverlays.forEach(el => {
+                let current = el;
+                let levels = 0;
+                while (current && current !== document.body && levels < 20) {
+                    if (current.parentElement && (
+                        current.parentElement.id === 'contents' || 
+                        current.parentElement.classList.contains('contents') || 
+                        current.parentElement.id === 'items' ||
+                        current.parentElement.tagName.toLowerCase() === 'ytd-item-section-renderer' ||
+                        current.parentElement.tagName.toLowerCase() === 'ytd-playlist-video-list-renderer'
+                    )) {
+                        rowSet.add(current);
+                        break;
+                    }
+                    current = current.parentElement;
+                    levels++;
+                }
+            });
+            rows = Array.from(rowSet);
+            YTDebug.log("getPlaylistRows() raw rowSet size:", rows.length);
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentListId = urlParams.get('list');
+
+        let rejectedByVisibility = 0;
+        let rejectedByShelf = 0;
+        let rejectedByLink = 0;
+        let rejectedByListId = 0;
+
+        rows = rows.filter(row => {
+            if (!this.isElementVisible(row)) { rejectedByVisibility++; return false; }
+            
+            const videoLink = row.querySelector('a[href*="/watch?v="], a[href*="/shorts/"]');
+            if (!videoLink) { rejectedByLink++; return false; }
+
+            if (currentListId && videoLink.href.includes('list=') && !videoLink.href.includes(`list=${currentListId}`)) {
+                rejectedByListId++;
+                return false;
+            }
+
+            return true;
+        });
+
+        YTDebug.log(`getPlaylistRows() after filtering: ${rows.length}. Rejected: invis=${rejectedByVisibility}, shelf=${rejectedByShelf}, link=${rejectedByLink}, listId=${rejectedByListId}`);
+        return rows;
+    },
+    getVideoDuration(row) {
+        const elements = row.querySelectorAll('span#text.ytd-thumbnail-overlay-time-status-renderer, .ytd-thumbnail-overlay-time-status-renderer #text, badge-shape, .badge-shape-wiz__text');
+        for (let el of elements) {
+            const text = el.textContent || '';
+            const match = text.match(/\b(\d{1,2}:\d{2}(?::\d{2})?)\b/);
+            if (match) {
+                const duration = this.parseTime(match[1]);
+                if (duration > 0) return duration;
+            }
+        }
+        return 0;
     },
     isElementVisible(element) {
         if (!element) return false;
@@ -66,6 +153,19 @@ const YTParser = {
         );
     },
     getTotalVideoCount() {
+        const isWatchPage = location.href.includes('watch?v=');
+        
+        if (isWatchPage) {
+            const watchPagePanelIndex = document.querySelector('ytd-watch-flexy .publisher-container .index-message-wrapper, ytd-playlist-panel-renderer .index-message-wrapper, ytd-watch-flexy .yt-playlist-panel-header-view-model-wiz__index');
+            if (watchPagePanelIndex && watchPagePanelIndex.textContent) {
+                const match = watchPagePanelIndex.textContent.match(/\/\s*(\d+)/);
+                if (match) {
+                    YTDebug.log("getTotalVideoCount() found count via watch page index:", match[1]);
+                    return parseInt(match[1]);
+                }
+            }
+        }
+
         const statsSelectors = [
             'ytd-playlist-sidebar-primary-info-renderer #stats',
             'ytd-playlist-header-renderer #stats',
@@ -87,7 +187,10 @@ const YTParser = {
                 const match = text.match(/(\d[\d.,\s]*)/);
                 if (match) {
                     const count = parseInt(match[1].replace(/[.,\s]/g, ''));
-                    if (count > 0) return count;
+                    if (count > 0) {
+                        YTDebug.log("getTotalVideoCount() found count via stats:", count, "selector:", selector);
+                        return count;
+                    }
                 }
             }
         }
@@ -100,10 +203,14 @@ const YTParser = {
                 const match = text.match(/(\d[\d.,\s]*)/);
                 if (match) {
                     const count = parseInt(match[1].replace(/[.,\s]/g, ''));
-                    if (count > 0) return count;
+                    if (count > 0) {
+                        YTDebug.log("getTotalVideoCount() found count via fallback span:", count);
+                        return count;
+                    }
                 }
             }
         }
+        YTDebug.log("getTotalVideoCount() returning: 0");
         return 0;
     }
 };
@@ -178,6 +285,8 @@ const YTCalculator = {
         let selectedCount = 0;
         const rows = YTParser.getPlaylistRows();
 
+        const progressSelector = 'ytd-thumbnail-overlay-resume-playback-renderer, yt-thumbnail-overlay-resume-playback-view-model, #progress, #progress-bar, [class*="resume-playback"], [id*="resume-playback"], [class*="progress-bar"]';
+
         rows.forEach((row, index) => {
             const videoIndex = index + 1;
             const inRange = videoIndex >= min && videoIndex <= max;
@@ -186,9 +295,22 @@ const YTCalculator = {
             if (checkbox) {
                 checkbox.checked = inRange;
                 if (inRange) {
-                    const timeEl = row.querySelector('span#text.ytd-thumbnail-overlay-time-status-renderer') ||
-                        row.querySelector('.ytd-thumbnail-overlay-time-status-renderer #text');
-                    const duration = YTParser.parseTime(timeEl?.textContent || '0:00');
+                    let duration = YTParser.getVideoDuration(row);
+                    
+                    if (window._ytCalcResumeWhereLeftOff) {
+                        const progressEl = row.querySelector(progressSelector);
+                        if (progressEl) {
+                            const styleWidth = progressEl.style.width || '';
+                            const match = styleWidth.match(/([\d.]+)%/);
+                            if (match) {
+                                const percent = parseFloat(match[1]);
+                                if (percent > 0 && percent <= 100) {
+                                    duration = duration * (1 - (percent / 100));
+                                }
+                            }
+                        }
+                    }
+                    
                     totalSeconds += duration;
                     selectedCount++;
                 }
@@ -211,9 +333,7 @@ const YTCalculator = {
         let totalSeconds = 0;
         const rows = YTParser.getPlaylistRows();
         rows.forEach(row => {
-            const timeEl = row.querySelector('span#text.ytd-thumbnail-overlay-time-status-renderer') ||
-                row.querySelector('.ytd-thumbnail-overlay-time-status-renderer #text');
-            const duration = YTParser.parseTime(timeEl?.textContent || '0:00');
+            const duration = YTParser.getVideoDuration(row);
             totalSeconds += duration;
         });
         return totalSeconds;
@@ -249,11 +369,18 @@ const YTUI = {
         if (row.querySelector('.yt-calc-checkbox')) return;
         const cb = this.createElement('input', { type: 'checkbox', className: 'yt-calc-checkbox', checked: true });
         cb.onclick = (e) => { e.stopPropagation(); MainApp.update(); };
-        const container = row.querySelector('#index-container') || row.querySelector('#content');
+        
+        let container = row.querySelector('#index-container');
         if (container) {
             container.style.display = 'flex';
             container.style.alignItems = 'center';
             container.prepend(cb);
+        } else {
+            // New fallback for modern generic <div> rows
+            const fallbackContainer = this.createElement('div', { className: 'yt-calc-checkbox-container', style: { display: 'flex', alignItems: 'center', padding: '0 8px', minWidth: '40px', justifyContent: 'center' }});
+            fallbackContainer.appendChild(cb);
+            row.style.display = 'flex';
+            row.prepend(fallbackContainer);
         }
     }
 };
@@ -275,11 +402,11 @@ const PlaylistPanelInfo = {
 
     findPlaylistHeaderContainer() {
         // Return the playlist panel renderer if present
-        const playlistPanel = document.querySelector('ytd-playlist-panel-renderer');
+        const playlistPanel = document.querySelector('ytd-playlist-panel-renderer, yt-playlist-panel-view-model, .yt-playlist-panel-view-model-wiz');
         if (playlistPanel) return playlistPanel;
 
         // Fallback: look for any playlist panel-like container
-        const alt = document.querySelector('ytd-playlist-sidebar-renderer, #playlist-items, #items');
+        const alt = document.querySelector('ytd-playlist-sidebar-renderer, #playlist-items, #items, .yt-playlist-panel-view-model-wiz__header');
         if (alt) return alt;
 
         // Debug logs to help diagnose
@@ -341,8 +468,8 @@ const PlaylistPanelInfo = {
         }
 
         // Prefer inserting before the items list if available, otherwise append to the panel
-        const itemsEl = headerContainer.querySelector('#items, #contents, ytd-playlist-video-list-renderer, ytd-section-list-renderer')
-            || headerContainer.parentElement && headerContainer.parentElement.querySelector('#items, #contents');
+        const itemsEl = headerContainer.querySelector('#items, #contents, ytd-playlist-video-list-renderer, ytd-section-list-renderer, .yt-playlist-panel-view-model-wiz__video-list')
+            || headerContainer.parentElement && headerContainer.parentElement.querySelector('#items, #contents, .yt-playlist-panel-view-model-wiz__video-list');
 
         if (itemsEl && itemsEl.parentElement) {
             itemsEl.parentElement.insertBefore(infoContainer, itemsEl);
@@ -370,8 +497,8 @@ const PlaylistPanelInfo = {
             const hasVideoChanges = mutations.some(m =>
                 Array.from(m.addedNodes).some(node =>
                     node.nodeType === 1 && node.querySelector && (
-                        node.matches('ytd-playlist-panel-video-renderer') || 
-                        node.querySelector('ytd-playlist-panel-video-renderer')
+                        node.matches('ytd-playlist-panel-video-renderer, yt-playlist-panel-video-view-model, .yt-playlist-panel-video-view-model-wiz') || 
+                        node.querySelector('ytd-playlist-panel-video-renderer, yt-playlist-panel-video-view-model, .yt-playlist-panel-video-view-model-wiz')
                     )
                 )
             );
@@ -380,36 +507,45 @@ const PlaylistPanelInfo = {
             }
         });
 
-        const playlistPanel = document.querySelector('ytd-playlist-panel-renderer');
-        if (playlistPanel) {
-            observer.observe(playlistPanel, { childList: true, subtree: true });
+        const targetNode = document.querySelector('ytd-page-manager') || document.body;
+        if (targetNode) {
+            observer.observe(targetNode, { childList: true, subtree: true });
         }
     }
 };
 
 const MainApp = {
     isFirstScan: true,
+    lastPlaylistId: '',
+    lastPageType: '',
 
     async init() {
-        // Fix 1: Explicitly check URL to prevent appearing on profile or other pages
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentListId = urlParams.get('list');
         const isPlaylist = location.href.includes('list=');
         const isWatchPage = location.href.includes('watch?v=');
+        const currentPageType = isWatchPage ? 'watch' : (isPlaylist ? 'playlist' : 'other');
 
-        if (!isPlaylist && !isWatchPage) {
+        if (!isPlaylist && !isWatchPage) return;
+
+        // Reset state only on different playlist OR when transitioning between watch/playlist modes
+        if (this.lastPlaylistId !== currentListId || this.lastPageType !== currentPageType) {
+            this.isFirstScan = true;
+            this.lastPlaylistId = currentListId;
+            this.lastPageType = currentPageType;
+            this.lastVideoCount = 0;
+            this.noGrowthCounter = 0;
             const existingPanel = document.getElementById(panelId);
             if (existingPanel) existingPanel.remove();
-            return;
         }
 
         if (!YTi18n.strings.header) await YTi18n.init();
 
-        // Initialize playlist panel info for watch page with playlist
         if (isWatchPage && isPlaylist) {
             PlaylistPanelInfo.init();
         }
 
         const target = this.findTarget();
-
         if (!target) {
             if (location.href.includes('list=') || location.href.includes('watch?v=')) {
                 this.retryCount = (this.retryCount || 0) + 1;
@@ -424,6 +560,21 @@ const MainApp = {
 
         // Create or ensure the panel is there
         this.ensurePanel(target);
+
+        if (this.isFirstScan) {
+            this.isFirstScan = false;
+            [500, 2000, 5000, 8000].forEach(ms => setTimeout(() => {
+                this.scan();
+                if (ms === 5000) YTDebug.checkProgressBar();
+            }, ms));
+            this.setupScrollObserver();
+        } else {
+            // Ensure we scan again if navigating within the same playlist
+            setTimeout(() => {
+                this.scan();
+                YTDebug.checkProgressBar();
+            }, 500);
+        }
 
         const panel = document.getElementById(panelId);
         if (panel) YTTheme.updatePanelTheme(panel, target);
@@ -444,17 +595,19 @@ const MainApp = {
             // Periodically ensure the panel hasn't been nuked by YouTube's DOM updates
             this.ensurePanel();
 
-            chrome.storage.local.get(['autoscroll', 'resumeWhereLeftOff', 'syncStartWithResume'], (data) => {
+            chrome.storage.local.get(['autoscroll', 'resumeWhereLeftOff'], (data) => {
+                window._ytCalcResumeWhereLeftOff = data.resumeWhereLeftOff === true;
                 const autoScrollEnabled = data.autoscroll !== false;
                 const resumeWhereLeftOff = data.resumeWhereLeftOff === true;
-                const syncStartWithResume = data.syncStartWithResume === true;
 
-                // Fix 2: Prevent infinite loop when hidden/private videos exist
                 const hasNewVideos = current > (this.lastVideoCount || 0);
+
                 if (hasNewVideos) {
                     this.lastVideoCount = current;
                     this.noGrowthCounter = 0;
-                } else {
+                    // Failsafe: if new videos are found but observer missed them, trigger scan
+                    this.scan();
+                } else if (current > 0 && current < total && total > 100) {
                     this.noGrowthCounter = (this.noGrowthCounter || 0) + 1;
                 }
 
@@ -478,24 +631,16 @@ const MainApp = {
                     if (loader) loader.style.display = 'none';
 
                     const rows = YTParser.getPlaylistRows();
+                    const progressSelector = 'ytd-thumbnail-overlay-resume-playback-renderer, yt-thumbnail-overlay-resume-playback-view-model, #progress, #progress-bar, [class*="resume-playback"], [id*="resume-playback"], [class*="progress-bar"]';
+                    
                     let lastWatchedRow = null;
                     let lastWatchedIndex = -1;
-                    
+
                     for (let i = rows.length - 1; i >= 0; i--) {
-                        if (rows[i].querySelector('ytd-thumbnail-overlay-resume-playback-renderer')) {
+                        if (rows[i].querySelector(progressSelector)) {
                             lastWatchedRow = rows[i];
                             lastWatchedIndex = i + 1;
                             break;
-                        }
-                    }
-
-                    if (syncStartWithResume && lastWatchedIndex > 0) {
-                        const r1 = document.getElementById('range-1');
-                        const i1 = document.getElementById('range-input-1');
-                        if (r1 && i1) {
-                            r1.value = lastWatchedIndex;
-                            i1.value = lastWatchedIndex;
-                            this.update();
                         }
                     }
 
@@ -535,6 +680,10 @@ const MainApp = {
                         PlaylistPanelInfo.render();
                     }
                 }
+                if (changes.resumeWhereLeftOff !== undefined) {
+                    window._ytCalcResumeWhereLeftOff = changes.resumeWhereLeftOff.newValue === true;
+                    MainApp.applyResumeSettings();
+                }
             });
             this.hasStorageListener = true;
         }
@@ -557,8 +706,12 @@ const MainApp = {
         for (const selector of selectors) {
             const elements = document.querySelectorAll(selector);
             const visibleEl = Array.from(elements).find(el => YTParser.isElementVisible(el));
-            if (visibleEl) return visibleEl;
+            if (visibleEl) {
+                YTDebug.log("findTarget() found visible target with selector:", selector);
+                return visibleEl;
+            }
         }
+        YTDebug.log("findTarget() failed to find any target.");
         return null;
     },
 
@@ -582,18 +735,42 @@ const MainApp = {
         const current = YTParser.getPlaylistRows().length;
 
         if (total > current && total > 100) {
-            // Scroll the main window container
-            const windowScroll = document.scrollingElement || document.documentElement;
-            if (windowScroll) {
-                windowScroll.scrollTop = windowScroll.scrollHeight;
-            }
+            // Ensure window scroll fires for playlist pages
+            window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+            window.dispatchEvent(new Event('scroll'));
 
-            // Scroll the specific playlist container if it exists (for watch page)
+            // Scroll ytd-app just in case
+            const app = document.querySelector('ytd-app');
+            if (app) app.scrollTop = app.scrollHeight;
+
+            // Scroll the specific playlist container if it exists and is visible (for watch page)
             const playlistItems = document.querySelector('#playlist-items, #items.ytd-playlist-panel-renderer');
-            if (playlistItems) {
+            if (playlistItems && YTParser.isElementVisible(playlistItems)) {
                 playlistItems.scrollTop = playlistItems.scrollHeight;
             }
         }
+    },
+
+    applyResumeSettings() {
+        chrome.storage.local.get(['resumeWhereLeftOff'], (data) => {
+            const rows = YTParser.getPlaylistRows();
+            let lastWatchedRow = null;
+            let lastWatchedIndex = -1;
+            
+            const progressSelector = 'ytd-thumbnail-overlay-resume-playback-renderer, yt-thumbnail-overlay-resume-playback-view-model, #progress, #progress-bar, [class*="resume-playback"], [id*="resume-playback"], [class*="progress-bar"]';
+
+            for (let i = rows.length - 1; i >= 0; i--) {
+                if (rows[i].querySelector(progressSelector)) {
+                    lastWatchedRow = rows[i];
+                    lastWatchedIndex = i + 1;
+                    break;
+                }
+            }
+
+            if (data.resumeWhereLeftOff && lastWatchedRow) {
+                lastWatchedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
     },
 
     renderPanel(target) {
@@ -719,6 +896,7 @@ const MainApp = {
     },
 
     scan() {
+        YTDebug.log("MainApp.scan() called.");
         this.ensurePanel();
         const rows = YTParser.getPlaylistRows();
         const r1 = document.getElementById('range-1');
@@ -728,8 +906,9 @@ const MainApp = {
 
         if (rows.length > 0 && r1 && r2 && i2) {
             const count = rows.length;
-            const currentMax = parseInt(r2.max) || 0;
-            const wasAtMax = parseInt(r2.value) === currentMax || this.isFirstScan;
+            const currentMax = parseInt(r2.max);
+            const isInitial = isNaN(currentMax) || currentMax <= 1;
+            const wasAtMax = parseInt(r2.value) === currentMax || isInitial;
 
             r1.max = r2.max = count;
             i1.max = i2.max = count;
@@ -737,7 +916,6 @@ const MainApp = {
             if (wasAtMax) {
                 r2.value = i2.value = count;
             }
-            this.isFirstScan = false;
         }
         rows.forEach(row => YTUI.createCheckbox(row));
 
@@ -791,18 +969,19 @@ const MainApp = {
         const observer = new MutationObserver((mutations) => {
             const hasNewRows = mutations.some(m =>
                 Array.from(m.addedNodes).some(node =>
-                    node.nodeType === 1 && (node.matches('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer') || node.querySelector('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer'))
+                    node.nodeType === 1 && (
+                        node.matches('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer, ytd-thumbnail') || 
+                        node.querySelector('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer, ytd-thumbnail')
+                    )
                 )
             );
             if (hasNewRows) this.scan();
         });
 
-        const list = document.querySelector('ytd-section-list-renderer #contents')
-            || document.querySelector('ytd-playlist-video-list-renderer #contents')
-            || document.querySelector('#playlist-items')
-            || document.body;
-
-        observer.observe(list, { childList: true, subtree: true });
+        const targetNode = document.querySelector('ytd-page-manager') || document.body;
+        if (targetNode) {
+            observer.observe(targetNode, { childList: true, subtree: true });
+        }
     }
 };
 
