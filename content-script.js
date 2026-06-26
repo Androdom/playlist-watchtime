@@ -443,14 +443,27 @@ const PlaylistPanelInfo = {
         const totalSeconds = YTCalculator.calculatePlaylistDuration();
         const speeds = [1, 1.5, 1.75, 2];
 
-        infoContainer.innerHTML = speeds.map(speed => {
+        infoContainer.textContent = '';
+        speeds.forEach(speed => {
             const duration = YTCalculator.formatDurationShort(totalSeconds / speed);
             const label = speed === 1 ? '1x' : speed.toFixed(2) + 'x';
-            return `<div class="speed-info-box">
-                        <span class="speed-label">${label}</span>
-                        <span class="speed-duration">${duration}</span>
-                    </div>`;
-        }).join('');
+            
+            const box = document.createElement('div');
+            box.className = 'speed-info-box';
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'speed-label';
+            labelSpan.textContent = label;
+            
+            const durationSpan = document.createElement('span');
+            durationSpan.className = 'speed-duration';
+            durationSpan.textContent = duration;
+            
+            box.appendChild(labelSpan);
+            box.appendChild(durationSpan);
+            
+            infoContainer.appendChild(box);
+        });
 
         // Force visible styling in case YouTube CSS hides it
         try {

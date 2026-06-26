@@ -162,3 +162,10 @@ web-ext-artifacts/
 
 # Project Management
 TODO.md
+
+# Extension source directory
+watchtime-chrome/
+chrome-ytplaylist/
+
+# Release folder
+Asürümler/

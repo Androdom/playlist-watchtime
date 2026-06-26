@@ -8,6 +8,7 @@
   </p>
 
   <p>
+    <a href="https://chromewebstore.google.com/detail/youtube-playlist-length-t/flflbljphneeogbihphhkgnjefcppfff"><img src="https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Extension" /></a>
     <a href="https://addons.mozilla.org/en-US/firefox/addon/watchtime-calc/"><img src="https://img.shields.io/badge/Firefox-Add--on-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox Add-on" /></a>
   </p>
 
@@ -99,8 +100,8 @@ It automatically sums up all video durations—even as you scroll and load more 
 ## 🛠️ Installation
 
 ### 📥 Install from Official Stores
+- **[Chrome Web Store](https://chromewebstore.google.com/detail/youtube-playlist-length-t/flflbljphneeogbihphhkgnjefcppfff)**
 - **[Firefox Add-ons Page](https://addons.mozilla.org/en-US/firefox/addon/watchtime-calc/)**
-- 🟡 **Chrome Web Store** — *Coming soon!* In the meantime, follow the manual installation steps below.
 
 ### 💻 Manual Installation (Developer Mode)
 
